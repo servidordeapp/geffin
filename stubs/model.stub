@@ -3,9 +3,13 @@
 namespace {{ namespace }};
 
 {{ factoryImport }}
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\HasTenant;
 
-class {{ class }} extends Model
+class {{ class }} extends BaseModel
 {
     {{ factory }}
+
+    protected $fillable = [
+
+    ];
 }

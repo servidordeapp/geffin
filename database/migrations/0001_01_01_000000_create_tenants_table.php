@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
-            $table->id();
-            $table->foreingUuid()->nullable()->index()->constrained();
+        Schema::create('tenants', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('name', 100);
+            $table->string('slug', 150)->unique()->index();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('tenants');
     }
 };
