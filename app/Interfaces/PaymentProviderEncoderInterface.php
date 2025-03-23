@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface PaymentProviderConsumerInterface
+interface PaymentProviderEncoderInterface
 {
     public function __toString(): string;
 }

@@ -2,12 +2,12 @@
 
 namespace App\Traits;
 
-use App\Interfaces\PaymentProviderConsumerInterface;
+use App\Interfaces\PaymentProviderEncoderInterface;
 use GuzzleHttp\Client;
 
 trait CanMakeRequestWithBody
 {
-    protected function makeRequest(PaymentProviderConsumerInterface $customer, string $httpMethod): array
+    protected function makeRequest(PaymentProviderEncoderInterface $customer, string $httpMethod): array
     {
         $httpClient = new Client();
         $response = $httpClient->request(strtoupper($httpMethod), $this->url, [

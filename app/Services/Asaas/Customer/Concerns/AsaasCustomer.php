@@ -2,10 +2,10 @@
 
 namespace App\Services\Asaas\Customer\Concerns;
 
-use App\Interfaces\PaymentProviderConsumerInterface;
+use App\Interfaces\PaymentProviderEncoderInterface;
 use InvalidArgumentException;
 
-final class AsaasCustomer implements PaymentProviderConsumerInterface
+final class AsaasCustomer implements PaymentProviderEncoderInterface
 {
     /**
      * Summary of __construct
