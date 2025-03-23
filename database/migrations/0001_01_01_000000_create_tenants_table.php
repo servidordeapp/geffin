@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('slug', 150)->unique()->index();
             $table->string('email', 150)->nullable();
-            $table->string('phone', 14)->nullable();
+            $table->string('phone', 16)->nullable();
+            $table->string('document', 17)->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
             $table->softDeletes();
