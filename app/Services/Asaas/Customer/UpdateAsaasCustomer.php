@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Asaas\Cliente;
+namespace App\Services\Asaas\Customer;
 
-use App\Services\Asaas\Cliente\Concerns\AsaasCustomer;
-use App\Services\Asaas\Core\Cliente;
+use App\Services\Asaas\Customer\Concerns\AsaasCustomer;
+use App\Services\Asaas\Core\Customer;
 use App\Traits\CanMakeRequestWithBody;
 
-class UpdateAsaasCustomer extends Cliente
+class UpdateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
 

@@ -2,7 +2,7 @@
 
 namespace App\Services\Asaas\Core;
 
-abstract class Cliente extends Asaas
+abstract class Customer extends Asaas
 {
     protected $endpoint = 'customers';
 

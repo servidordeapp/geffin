@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Asaas\Cliente;
+namespace App\Services\Asaas\Customer;
 
-use App\Services\Asaas\Core\Cliente;
+use App\Services\Asaas\Core\Customer;
 use App\Traits\CanMakeRequest;
 
-class RestoreAsaasCustomer extends Cliente
+class RestoreAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Asaas\Cliente;
+namespace App\Services\Asaas\Customer;
 
-use App\Services\Asaas\Core\Cliente;
+use App\Services\Asaas\Core\Customer;
 use App\Traits\CanMakeRequest;
 
-class GetAsaasCustomer extends Cliente
+class DeleteAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 
@@ -17,6 +17,6 @@ class GetAsaasCustomer extends Cliente
     public function handle(string $id): array
     {
         $this->url = "$this->url/$id";
-        return $this->makeRequest(httpMethod: 'GET');
+        return $this->makeRequest(httpMethod: 'DELETE');
     }
 }

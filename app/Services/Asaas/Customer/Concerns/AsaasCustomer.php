@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Asaas\Cliente\Concerns;
+namespace App\Services\Asaas\Customer\Concerns;
 
 use App\Interfaces\PaymentProviderConsumerInterface;
 use InvalidArgumentException;

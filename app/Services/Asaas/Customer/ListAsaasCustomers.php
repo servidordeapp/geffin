@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Asaas\Cliente;
+namespace App\Services\Asaas\Customer;
 
-use App\Services\Asaas\Cliente\Concerns\ListAsaasCustomersParameters;
-use App\Services\Asaas\Core\Cliente;
+use App\Services\Asaas\Customer\Concerns\ListAsaasCustomersParameters;
+use App\Services\Asaas\Core\Customer;
 use App\Traits\CanMakeRequest;
 
-class ListAsaasCustomers extends Cliente
+class ListAsaasCustomers extends Customer
 {
     use CanMakeRequest;
 
