@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Asaas\Customer\Concerns;
+namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use InvalidArgumentException;
 
@@ -31,7 +31,7 @@ final class ListAsaasCustomersParameters
         }
     }
 
-    private function toArray(): array
+    public function __toArray(): array
     {
         return array_filter([
             'offset' => $this->offset,
@@ -46,6 +46,6 @@ final class ListAsaasCustomersParameters
 
     public function toQueryString(): string
     {
-        return http_build_query($this->toArray());
+        return http_build_query($this->__toArray());
     }
 }

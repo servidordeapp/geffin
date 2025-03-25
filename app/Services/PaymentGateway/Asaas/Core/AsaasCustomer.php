@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Asaas\Core;
+namespace App\Services\PaymentGateway\Asaas\Core;
 
-abstract class Customer extends Asaas
+abstract class AsaasCustomer extends AsaasCore
 {
     protected $endpoint = 'customers';
 

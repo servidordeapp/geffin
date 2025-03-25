@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Asaas\Customer\Concerns;
+namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use App\Interfaces\PaymentProviderEncoderInterface;
 use InvalidArgumentException;
 
-final class AsaasCustomer implements PaymentProviderEncoderInterface
+final class AsaasCustomerInput implements PaymentProviderEncoderInterface
 {
     /**
      * Summary of __construct
+     * @param string $id ID do cliente
      * @param string $name Nome do cliente
      * @param string $cpfCnpj CPF ou CNPJ do cliente
      * @param string $email Email do cliente
@@ -31,6 +32,7 @@ final class AsaasCustomer implements PaymentProviderEncoderInterface
      * @throws \InvalidArgumentException
      */
     public function __construct(
+        private ?string $id = null,
         private ?string $name = null,
         private ?string $cpfCnpj = null,
         private ?string $email = null,
@@ -64,9 +66,15 @@ final class AsaasCustomer implements PaymentProviderEncoderInterface
         }
     }
 
-    private function toArray(): array
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function __toArray(): array
     {
         return array_filter([
+            "id" => $this->id,
             "name" => $this->name,
             "cpfCnpj" => $this->cpfCnpj,
             "email" => $this->email,
@@ -91,6 +99,6 @@ final class AsaasCustomer implements PaymentProviderEncoderInterface
 
     public function __toString(): string
     {
-        return json_encode($this->toArray());
+        return json_encode($this->__toArray());
     }
 }
