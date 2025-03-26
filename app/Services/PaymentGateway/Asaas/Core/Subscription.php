@@ -2,7 +2,7 @@
 
 namespace App\Services\PaymentGateway\Asaas\Core;
 
-abstract class Subscription extends AsaasCore
+abstract class Subscription extends Asaas
 {
     protected $endpoint = 'subscriptions';
 

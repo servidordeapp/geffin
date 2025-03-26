@@ -7,11 +7,18 @@ use GuzzleHttp\Client;
 
 trait CanMakeRequestWithBody
 {
-    protected function makeRequest(PaymentProviderEncoderInterface $customer, string $httpMethod): array
+    /**
+     * Summary of makeRequest
+     * @param \App\Interfaces\PaymentProviderEncoderInterface $encodedData
+     * @param string $httpMethod
+     * @return array
+     * @throws \GuzzleHttp\Exception\RequestException
+     */
+    protected function makeRequest(PaymentProviderEncoderInterface $encodedData, string $httpMethod): array
     {
         $httpClient = new Client();
         $response = $httpClient->request(strtoupper($httpMethod), $this->url, [
-            'body' => $customer,
+            'body' => $encodedData,
             'headers' => $this->httpHeaders,
         ]);
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\PaymentGateway\Asaas\Customer;
+namespace App\Services\PaymentGateway\Asaas\Customer\Actions;
 
-use App\Services\PaymentGateway\Asaas\Core\AsaasCustomer;
+use App\Services\PaymentGateway\Asaas\Core\Customer;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerOutput;
 use App\Traits\CanMakeRequest;
 
-class GetAsaasCustomer extends AsaasCustomer
+class GetAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 

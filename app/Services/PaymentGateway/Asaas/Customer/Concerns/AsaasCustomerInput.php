@@ -2,68 +2,80 @@
 
 namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
+use App\Contracts\Customer\CustomerInput;
 use App\Interfaces\PaymentProviderEncoderInterface;
 use InvalidArgumentException;
 
-final class AsaasCustomerInput implements PaymentProviderEncoderInterface
+final class AsaasCustomerInput implements PaymentProviderEncoderInterface, CustomerInput
 {
-    /**
-     * Summary of __construct
-     * @param string $id ID do cliente
-     * @param string $name Nome do cliente
-     * @param string $cpfCnpj CPF ou CNPJ do cliente
-     * @param string $email Email do cliente
-     * @param string $phone Fone fixo
-     * @param string $mobilePhone Fone celular
-     * @param string $address Logradouro
-     * @param string $addressNumber Número do endereço
-     * @param string $complement Complemento do endereço (máx. 255 caracteres)
-     * @param string $province Bairro
-     * @param string $postalCode CEP do endereço
-     * @param string $externalReference Identificador do cliente no seu sistema
-     * @param bool $notificationDisabled true para desabilitar o envio de notificações de cobrança
-     * @param string $additionalEmails Emails adicionais para envio de notificações de cobrança separados por ","
-     * @param string $municipalInscription Inscrição municipal do cliente
-     * @param string $stateInscription Inscrição estadual do cliente
-     * @param string $observations Observações adicionais
-     * @param string $groupName Nome do grupo ao qual o cliente pertence
-     * @param string $company Empresa
-     * @param bool $foreignCustomer informe true caso seja pagador estrangeiro
-     * @throws \InvalidArgumentException
-     */
+    private ?string $id; // ID do cliente
+    private ?string $name; // Nome do cliente
+    private ?string $cpfCnpj; // CPF ou CNPJ do cliente
+    private ?string $email; // Email do cliente
+    private ?string $phone; // Fone fixo
+    private ?string $mobilePhone; // Fone celular
+    private ?string $address; // Logradouro
+    private ?string $addressNumber; // Número do endereço
+    private ?string $complement; // Complemento do endereço (máx. 255 caracteres)
+    private ?string $province; // Bairro
+    private ?string $postalCode; // CEP do endereço
+    private ?string $externalReference; // Identificador do cliente no seu sistema
+    private ?bool $notificationDisabled; // true para desabilitar o envio de notificações de cobrança
+    private ?string $additionalEmails; // Emails adicionais para envio de notificações de cobrança separados por ","
+    private ?string $municipalInscription; // Inscrição municipal do cliente
+    private ?string $stateInscription; // Inscrição estadual do cliente
+    private ?string $observations; // Observações adicionais
+    private ?string $groupName; // Nome do grupo ao qual o cliente pertence
+    private ?string $company; // Empresa
+    private ?bool $foreignCustomer; // informe true caso seja pagador estrangeiro
+
     public function __construct(
-        private ?string $id = null,
-        private ?string $name = null,
-        private ?string $cpfCnpj = null,
-        private ?string $email = null,
-        private ?string $phone = null,
-        private ?string $mobilePhone = null,
-        private ?string $address = null,
-        private ?string $addressNumber = null,
-        private ?string $complement = null,
-        private ?string $province = null,
-        private ?string $postalCode = null,
-        private ?string $externalReference = null,
-        private ?bool $notificationDisabled = true,
-        private ?string $additionalEmails = null,
-        private ?string $municipalInscription = null,
-        private ?string $stateInscription = null,
-        private ?string $observations = null,
-        private ?string $groupName = null,
-        private ?string $company = null,
-        private ?bool $foreignCustomer = false,
+        array $input,
     ) {
-        if (empty($name)) {
+        $this->id = $input['id'] ?? null;
+        $this->name = $input['name'] ?? null;
+        $this->cpfCnpj = $input['cpfCnpj'] ?? null;
+        $this->email = $input['email'] ?? null;
+        $this->phone = $input['phone'] ?? null;
+        $this->mobilePhone = $input['mobilePhone'] ?? null;
+        $this->address = $input['address'] ?? null;
+        $this->addressNumber = $input['addressNumber'] ?? null;
+        $this->complement = $input['complement'] ?? null;
+        $this->province = $input['province'] ?? null;
+        $this->postalCode = $input['postalCode'] ?? null;
+        $this->externalReference = $input['externalReference'] ?? null;
+        $this->notificationDisabled = $input['notificationDisabled'] ?? null;
+        $this->additionalEmails = $input['additionalEmails'] ?? null;
+        $this->municipalInscription = $input['municipalInscription'] ?? null;
+        $this->stateInscription = $input['stateInscription'] ?? null;
+        $this->observations = $input['observations'] ?? null;
+        $this->groupName = $input['groupName'] ?? null;
+        $this->company = $input['company'] ?? null;
+        $this->foreignCustomer = $input['foreignCustomer'] ?? null;
+
+        $this->validate();
+    }
+
+    /**
+     * Summary of validate
+     * @param array $input
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function validate(): void
+    {
+        if (empty($this->name) || $this->name === null) {
             throw new InvalidArgumentException("O nome do cliente deve ser informado");
         }
 
-        if (empty($cpfCnpj)) {
+        if (empty($this->cpfCnpj) || $this->cpfCnpj === null) {
             throw new InvalidArgumentException("O cpf ou cnpj do cliente deve ser informado");
         }
 
-        if (strlen($complement) > 255) {
+        if ($this->complement !== null && strlen($this->complement) > 255) {
             throw new InvalidArgumentException("O complemento do endereço deve ter no máximo 255 caracteres");
         }
+
     }
 
     public function getId(): ?string
@@ -94,7 +106,7 @@ final class AsaasCustomerInput implements PaymentProviderEncoderInterface
             "groupName" => $this->groupName,
             "company" => $this->company,
             "foreignCustomer" => $this->foreignCustomer,
-        ], fn ($value) => $value !== null);
+        ], fn($value) => $value !== null);
     }
 
     public function __toString(): string

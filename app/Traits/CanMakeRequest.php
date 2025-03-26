@@ -6,6 +6,12 @@ use GuzzleHttp\Client;
 
 trait CanMakeRequest
 {
+    /**
+     * Summary of makeRequest
+     * @param string $httpMethod
+     * @return array
+     * @throws \GuzzleHttp\Exception\RequestException
+     */
     protected function makeRequest(string $httpMethod): array
     {
         $httpClient = new Client();

@@ -4,7 +4,7 @@ namespace App\Services\PaymentGateway\Asaas\Core;
 
 use Exception;
 
-abstract class AsaasCore
+abstract class Asaas
 {
     private string $enviroment;
     protected string $api_key;

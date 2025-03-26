@@ -2,7 +2,7 @@
 
 namespace App\Services\PaymentGateway\Asaas\Core;
 
-abstract class AsaasCustomer extends AsaasCore
+abstract class Customer extends Asaas
 {
     protected $endpoint = 'customers';
 

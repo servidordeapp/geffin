@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\PaymentGateway\Asaas\Customer;
+namespace App\Services\PaymentGateway\Asaas\Customer\Actions;
 
-use App\Services\PaymentGateway\Asaas\Core\AsaasCustomer;
+use App\Services\PaymentGateway\Asaas\Core\Customer;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerInput;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerOutput;
 use App\Traits\CanMakeRequestWithBody;
 
-class CreateAsaasCustomer extends AsaasCustomer
+class UpdateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
 
@@ -16,10 +16,11 @@ class CreateAsaasCustomer extends AsaasCustomer
         parent::__construct();
     }
 
-    public function execute(array $data): AsaasCustomerOutput
+    public function execute(string $id, array $data): AsaasCustomerOutput
     {
         $customer = new AsaasCustomerInput(...$data);
-        $httpResponse = $this->makeRequest($customer, httpMethod: 'POST');
+        $this->url = "$this->url/$id";
+        $httpResponse = $this->makeRequest($customer, httpMethod: 'PUT');
         return new AsaasCustomerOutput(httpResponse: $httpResponse);
     }
 }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Services\PaymentGateway\Asaas\Customer\Facades;
+namespace App\Services\PaymentGateway\Asaas\Customer;
 
 use App\Contracts\Customer\CustomerInterface;
 use App\Contracts\Customer\CustomerOutput;
+use App\Services\PaymentGateway\Asaas\Customer\Actions\CreateAsaasCustomer;
 use Exception;
 
-class AsaasCustomerFacade implements CustomerInterface
+class AsaasCustomer implements CustomerInterface
 {
     public function get(): array
     {
@@ -25,7 +26,8 @@ class AsaasCustomerFacade implements CustomerInterface
 
     public function create(array $data): CustomerOutput
     {
-        throw new Exception("Nao implementado");
+        $creatable = new CreateAsaasCustomer($data);
+        return $creatable->execute();
     }
 
     public function update(string $id, array $data): CustomerOutput

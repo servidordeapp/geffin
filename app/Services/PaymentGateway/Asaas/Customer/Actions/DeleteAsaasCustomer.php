@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\PaymentGateway\Asaas\Customer;
+namespace App\Services\PaymentGateway\Asaas\Customer\Actions;
 
-use App\Services\PaymentGateway\Asaas\Core\AsaasCustomer;
+use App\Services\PaymentGateway\Asaas\Core\Customer;
 use App\Traits\CanMakeRequest;
 
-class DeleteAsaasCustomer extends AsaasCustomer
+class DeleteAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 
