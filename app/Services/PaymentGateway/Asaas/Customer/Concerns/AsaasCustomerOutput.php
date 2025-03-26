@@ -68,7 +68,6 @@ final class AsaasCustomerOutput implements CustomerOutput
      * Summary of __construct
      *
      * @param  array  $httpResponse  Resposta HTTP da criação do cliente
-     *
      */
     public function __construct(
         array $httpResponse,
