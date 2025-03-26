@@ -19,6 +19,7 @@ class GetAsaasCustomer extends Customer
     {
         $this->url = "$this->url/$id";
         $httpResponse = $this->makeRequest(httpMethod: 'GET');
+
         return new AsaasCustomerOutput(httpResponse: $httpResponse);
     }
 }

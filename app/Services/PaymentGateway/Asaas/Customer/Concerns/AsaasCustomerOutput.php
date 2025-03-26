@@ -3,43 +3,72 @@
 namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use App\Contracts\Customer\CustomerOutput;
-use InvalidArgumentException;
 
 final class AsaasCustomerOutput implements CustomerOutput
 {
     public ?string $id = null;
+
     public ?string $dateCreated = null;
+
     public ?string $name = null;
+
     public ?string $email = null;
+
     public ?string $company = null;
+
     public ?string $phone = null;
+
     public ?string $mobilePhone = null;
+
     public ?string $address = null;
+
     public ?string $addressNumber = null;
+
     public ?string $complement = null;
+
     public ?string $province = null;
+
     public ?string $postalCode = null;
+
     public ?string $cpfCnpj = null;
+
     public ?string $personType = null;
+
     public ?string $deleted = null;
+
     public ?string $additionalEmails = null;
+
     public ?string $externalReference = null;
+
     public bool $notificationDisabled;
+
     public ?string $observations = null;
+
     public ?string $municipalInscription = null;
+
     public ?string $stateInscription = null;
+
     public bool $canDelete;
+
     public ?string $cannotBeDeletedReason = null;
+
     public bool $canEdit;
+
     public ?string $cannotEditReason = null;
+
     public ?string $city = null;
+
     public ?string $cityName = null;
+
     public ?string $state = null;
+
     public ?string $country = null;
+
     /**
      * Summary of __construct
-     * @param array $httpResponse Resposta HTTP da criação do cliente
-     * @throws \InvalidArgumentException
+     *
+     * @param  array  $httpResponse  Resposta HTTP da criação do cliente
+     *
      */
     public function __construct(
         array $httpResponse,

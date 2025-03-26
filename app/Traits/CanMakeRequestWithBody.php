@@ -9,14 +9,12 @@ trait CanMakeRequestWithBody
 {
     /**
      * Summary of makeRequest
-     * @param \App\Interfaces\PaymentProviderEncoderInterface $encodedData
-     * @param string $httpMethod
-     * @return array
+     *
      * @throws \GuzzleHttp\Exception\RequestException
      */
     protected function makeRequest(PaymentProviderEncoderInterface $encodedData, string $httpMethod): array
     {
-        $httpClient = new Client();
+        $httpClient = new Client;
         $response = $httpClient->request(strtoupper($httpMethod), $this->url, [
             'body' => $encodedData,
             'headers' => $this->httpHeaders,

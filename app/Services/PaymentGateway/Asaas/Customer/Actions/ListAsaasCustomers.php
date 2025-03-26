@@ -19,7 +19,7 @@ class ListAsaasCustomers extends Customer
     public function execute(array $params): array
     {
         $customerParameters = new ListAsaasCustomersParameters(...$params);
-        $this->url = "$this->url?" . $customerParameters->toQueryString();
+        $this->url = "$this->url?".$customerParameters->toQueryString();
         $httpResponse = $this->makeRequest(httpMethod: 'GET');
         $httpResponse['data'] = array_map(
             function (array $customer) {
@@ -27,6 +27,7 @@ class ListAsaasCustomers extends Customer
             },
             $httpResponse['data']
         );
+
         return $httpResponse;
     }
 }

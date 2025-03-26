@@ -12,25 +12,28 @@ use GuzzleHttp\Exception\RequestException;
 class CreateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
+
     private AsaasCustomerInput $customer;
 
     public function __construct(
         array $data,
-    )
-    {
+    ) {
         parent::__construct();
         $this->customer = new AsaasCustomerInput($data);
     }
+
     /**
      * Summary of executearray
-     * @param array $data
+     *
+     * @param  array  $data
+     *
      * @throws \Exception
-     * @return AsaasCustomerOutput
      */
     public function execute(): AsaasCustomerOutput
     {
         try {
             $httpResponse = $this->makeRequest($this->customer, httpMethod: 'POST');
+
             return new AsaasCustomerOutput(httpResponse: $httpResponse);
         } catch (RequestException $requestException) {
             $data = json_decode($requestException->getResponse()->getBody()->getContents(), true);

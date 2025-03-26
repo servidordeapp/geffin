@@ -7,8 +7,11 @@ use Exception;
 abstract class Asaas
 {
     private string $enviroment;
+
     protected string $api_key;
+
     protected string $url;
+
     protected array $httpHeaders;
 
     public function __construct()

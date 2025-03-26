@@ -15,11 +15,11 @@ return [
 
         'asaas' => [
             'sandbox' => [
-                'url' => env('ASAAS_SANDBOX_URL') . '/' . env('ASAAS_API_VERSION', 'v3'),
+                'url' => env('ASAAS_SANDBOX_URL').'/'.env('ASAAS_API_VERSION', 'v3'),
                 'api_key' => env('ASAAS_SANDBOX_API_KEY'),
             ],
             'production' => [
-                'url' => env('ASAAS_PROD_URL') . '/' . env('ASAAS_API_VERSION', 'v3'),
+                'url' => env('ASAAS_PROD_URL').'/'.env('ASAAS_API_VERSION', 'v3'),
                 'api_key' => env('ASAAS_PROD_API_KEY'),
             ],
         ],

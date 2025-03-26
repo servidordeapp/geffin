@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class BaseModel extends Model implements Auditable
 {
+    use HasTenant;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use HasTenant;
 }

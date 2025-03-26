@@ -21,6 +21,7 @@ class UpdateAsaasCustomer extends Customer
         $customer = new AsaasCustomerInput(...$data);
         $this->url = "$this->url/$id";
         $httpResponse = $this->makeRequest($customer, httpMethod: 'PUT');
+
         return new AsaasCustomerOutput(httpResponse: $httpResponse);
     }
 }

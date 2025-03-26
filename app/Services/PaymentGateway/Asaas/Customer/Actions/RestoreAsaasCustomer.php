@@ -18,6 +18,7 @@ class RestoreAsaasCustomer extends Customer
     public function execute(string $id): AsaasCustomerOutput
     {
         $this->url = "$this->url/$id/restore";
+
         return new AsaasCustomerOutput($this->makeRequest(httpMethod: 'POST'));
     }
 }
