@@ -94,19 +94,19 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
             throw new InvalidArgumentException('O cpf ou cnpj do cliente deve ser informado');
         }
 
-        $this->validateDocument();
+        $this->cpfCnpj = $this->getDocument();
 
         if ($this->complement !== null && strlen($this->complement) > 255) {
             throw new InvalidArgumentException('O complemento do endereço deve ter no máximo 255 caracteres');
         }
     }
 
-    private function validateDocument(): void
+    private function getDocument(): string
     {
-        if (strlen(preg_replace('/\D/', '', $this->cpfCnpj) === 11)) {
-            $this->cpfCnpj = (new Cpf($this->cpfCnpj))->get();
+        if (strlen(preg_replace('/\D/', '', $this->cpfCnpj)) === 11) {
+            return (new Cpf($this->cpfCnpj))->get();
         }
-        $this->cpfCnpj = (new Cnpj($this->cpfCnpj))->get();
+        return (new Cnpj($this->cpfCnpj))->get();
     }
 
     public function getId(): ?string
