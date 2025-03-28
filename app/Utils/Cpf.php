@@ -13,7 +13,7 @@ class Cpf
         private string $value,
     ) {
         if (empty($value)) {
-            throw new InvalidCpfException("CPF não pode estar vazio");
+            throw new InvalidCpfException('CPF não pode estar vazio');
         }
 
         $this->validateCpfFormat();
@@ -24,7 +24,7 @@ class Cpf
         $cpf = preg_replace('/\D/', '', $this->value);
 
         if (strlen($cpf) !== 11) {
-            throw new InvalidCpfException("O CPF precisa conter 11 dígitos");
+            throw new InvalidCpfException('O CPF precisa conter 11 dígitos');
         }
 
         $sum = 0;
@@ -40,7 +40,7 @@ class Cpf
         $secondDigit = $sum % 11 < 2 ? 0 : 11 - ($sum % 11);
 
         if ($firstDigit !== intval($cpf[9]) || $secondDigit !== intval($cpf[10])) {
-            throw new InvalidCpfException("CPF inválido");
+            throw new InvalidCpfException('CPF inválido');
         }
     }
 }

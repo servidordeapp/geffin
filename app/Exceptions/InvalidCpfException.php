@@ -4,7 +4,4 @@ namespace App\Exceptions;
 
 use Exception;
 
-class InvalidCpfException extends Exception
-{
-    
-}
+class InvalidCpfException extends Exception {}
