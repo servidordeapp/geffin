@@ -47,7 +47,7 @@ it('throws exception when creating customer with missing data', function () {
         ->toThrow(\InvalidArgumentException::class);
 });
 
-it('generates a customer id when creating new customer', function () {
+it('generates a customer string id when creating new customer', function () {
     // Arrange
     $paymentGatewayCustomer = new AsaasCustomer;
     $customerData = [
@@ -60,5 +60,5 @@ it('generates a customer id when creating new customer', function () {
     $customer = $paymentGatewayCustomer->create($customerData);
 
     // Assert
-    expect($customer->id)->toBeString();
+    expect($customer)->id->toBeString();
 });
