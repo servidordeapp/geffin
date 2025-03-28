@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Contracts\Comun\DocumentInterface;
+use App\Contracts\Common\DocumentInterface;
 use App\Exceptions\InvalidDocumentException;
 
 class Cnpj implements DocumentInterface

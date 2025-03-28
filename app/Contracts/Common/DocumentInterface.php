@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Comun;
+namespace App\Contracts\Common;
 
 interface DocumentInterface
 {
