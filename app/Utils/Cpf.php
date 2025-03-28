@@ -2,9 +2,10 @@
 
 namespace App\Utils;
 
-use App\Exceptions\InvalidCpfException;
+use App\Contracts\Comun\DocumentInterface;
+use App\Exceptions\InvalidDocumentException;
 
-class Cpf
+class Cpf implements DocumentInterface
 {
     /**
      * Create a new class instance.
@@ -13,18 +14,18 @@ class Cpf
         private string $value,
     ) {
         if (empty($value)) {
-            throw new InvalidCpfException('CPF não pode estar vazio');
+            throw new InvalidDocumentException('CPF não pode estar vazio');
         }
 
         $this->validate();
     }
 
-    private function validate(): void
+    public function validate(): void
     {
         $cpf = preg_replace('/\D/', '', $this->value);
 
         if (strlen($cpf) !== 11) {
-            throw new InvalidCpfException('O CPF precisa conter 11 dígitos');
+            throw new InvalidDocumentException('O CPF precisa conter 11 dígitos');
         }
 
         $sum = 0;
@@ -40,7 +41,12 @@ class Cpf
         $secondDigit = $sum % 11 < 2 ? 0 : 11 - ($sum % 11);
 
         if ($firstDigit !== intval($cpf[9]) || $secondDigit !== intval($cpf[10])) {
-            throw new InvalidCpfException('CPF inválido');
+            throw new InvalidDocumentException('CPF inválido');
         }
+    }
+
+    public function get(): string
+    {
+        return $this->value;
     }
 }

@@ -4,6 +4,8 @@ namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use App\Contracts\Customer\CustomerInput;
 use App\Interfaces\PaymentProviderEncoderInterface;
+use App\Utils\Cpf;
+use App\Utils\Cnpj;
 use InvalidArgumentException;
 
 final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderInterface
@@ -92,10 +94,19 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
             throw new InvalidArgumentException('O cpf ou cnpj do cliente deve ser informado');
         }
 
+        $this->validateDocument();
+
         if ($this->complement !== null && strlen($this->complement) > 255) {
             throw new InvalidArgumentException('O complemento do endereço deve ter no máximo 255 caracteres');
         }
+    }
 
+    private function validateDocument(): void
+    {
+        if (strlen(preg_replace('/\D/', '', $this->cpfCnpj) === 11)) {
+            $this->cpfCnpj = (new Cpf($this->cpfCnpj))->get();
+        }
+        $this->cpfCnpj = (new Cnpj($this->cpfCnpj))->get();
     }
 
     public function getId(): ?string
@@ -126,7 +137,7 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
             'groupName' => $this->groupName,
             'company' => $this->company,
             'foreignCustomer' => $this->foreignCustomer,
-        ], fn ($value) => $value !== null);
+        ], fn($value) => $value !== null);
     }
 
     public function __toString(): string
