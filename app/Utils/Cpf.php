@@ -16,10 +16,10 @@ class Cpf
             throw new InvalidCpfException('CPF não pode estar vazio');
         }
 
-        $this->validateCpfFormat();
+        $this->validate();
     }
 
-    private function validateCpfFormat(): void
+    private function validate(): void
     {
         $cpf = preg_replace('/\D/', '', $this->value);
 
