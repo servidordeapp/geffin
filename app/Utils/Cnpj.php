@@ -22,9 +22,9 @@ class Cnpj implements DocumentInterface
 
     public function validate(): void
     {
-        $cpf = preg_replace('/\D/', '', $this->value);
+        $document = preg_replace('/\D/', '', $this->value);
 
-        if (strlen($cpf) !== 14) {
+        if (strlen($document) !== 14) {
             throw new InvalidDocumentException('O CNPJ precisa conter 14 dígitos');
         }
     }

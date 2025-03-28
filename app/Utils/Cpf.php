@@ -22,25 +22,25 @@ class Cpf implements DocumentInterface
 
     public function validate(): void
     {
-        $cpf = preg_replace('/\D/', '', $this->value);
+        $document = preg_replace('/\D/', '', $this->value);
 
-        if (strlen($cpf) !== 11) {
+        if (strlen($document) !== 11) {
             throw new InvalidDocumentException('O CPF precisa conter 11 dígitos');
         }
 
         $sum = 0;
         for ($i = 0; $i < 9; $i++) {
-            $sum += intval($cpf[$i]) * (10 - $i);
+            $sum += intval($document[$i]) * (10 - $i);
         }
         $firstDigit = $sum % 11 < 2 ? 0 : 11 - ($sum % 11);
 
         $sum = 0;
         for ($i = 0; $i < 10; $i++) {
-            $sum += intval($cpf[$i]) * (11 - $i);
+            $sum += intval($document[$i]) * (11 - $i);
         }
         $secondDigit = $sum % 11 < 2 ? 0 : 11 - ($sum % 11);
 
-        if ($firstDigit !== intval($cpf[9]) || $secondDigit !== intval($cpf[10])) {
+        if ($firstDigit !== intval($document[9]) || $secondDigit !== intval($document[10])) {
             throw new InvalidDocumentException('CPF inválido');
         }
     }
