@@ -2,8 +2,12 @@
 
 namespace App\Services\PaymentGateway\Asaas\Customer\Actions;
 
+use App\Exceptions\CustomerNotFoundException;
 use App\Services\PaymentGateway\Asaas\Core\Customer;
 use App\Traits\CanMakeRequest;
+use Error;
+use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\HttpFoundation\Response;
 
 class DeleteAsaasCustomer extends Customer
 {
@@ -17,9 +21,22 @@ class DeleteAsaasCustomer extends Customer
     public function execute(string $id): bool
     {
         $this->url = "$this->url/$id";
-        $httpResponse = $this->makeRequest(httpMethod: 'DELETE');
-        if ($httpResponse['deleted']) {
-            return true;
+        try {
+            $httpResponse = $this->makeRequest(httpMethod: 'DELETE');
+            if ($httpResponse['deleted']) {
+                return true;
+            }
+        } catch (RequestException $requestException) {
+            if ($requestException->getCode() === Response::HTTP_NOT_FOUND) {
+                throw new CustomerNotFoundException(
+                    message: 'Cliente nao encontrado',
+                    code: $requestException->getCode()
+                );
+            }
+            throw new Error(
+                message: 'Erro ao deletar o cliente: '.$requestException->getMessage(),
+                code: $requestException->getCode()
+            );
         }
 
         return false;
