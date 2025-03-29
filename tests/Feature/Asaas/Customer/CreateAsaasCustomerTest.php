@@ -14,7 +14,7 @@ it('can not create a customer with an invalid CPF', function () {
     ];
 
     // Act
-    expect(fn() => $paymentGatewayCustomer->create($customerData))
+    expect(fn () => $paymentGatewayCustomer->create($customerData))
         ->toThrow(InvalidDocumentException::class);
 });
 
@@ -44,7 +44,7 @@ it('throws exception when creating customer with missing data', function () {
     ];
 
     // Act & Assert
-    expect(fn() => $paymentGatewayCustomer->create($invalidCustomerData))
+    expect(fn () => $paymentGatewayCustomer->create($invalidCustomerData))
         ->toThrow(InvalidArgumentException::class);
 });
 
