@@ -14,6 +14,5 @@ describe('list customers', function () {
         [0, 10],
         [10, 10],
         [20, 10],
-    ]
-    );
+    ]);
 });
