@@ -8,7 +8,7 @@ use App\Utils\Cnpj;
 use App\Utils\Cpf;
 use InvalidArgumentException;
 
-final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderInterface
+final readonly class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderInterface
 {
     private ?string $id; // ID do cliente
 
@@ -51,30 +51,30 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
     private ?bool $foreignCustomer; // informe true caso seja pagador estrangeiro
 
     public function __construct(
-        array $input,
+        private array $input,
     ) {
-        $this->id = $input['id'] ?? null;
-        $this->name = $input['name'] ?? null;
-        $this->cpfCnpj = $input['cpfCnpj'] ?? null;
-        $this->email = $input['email'] ?? null;
-        $this->phone = $input['phone'] ?? null;
-        $this->mobilePhone = $input['mobilePhone'] ?? null;
-        $this->address = $input['address'] ?? null;
-        $this->addressNumber = $input['addressNumber'] ?? null;
-        $this->complement = $input['complement'] ?? null;
-        $this->province = $input['province'] ?? null;
-        $this->postalCode = $input['postalCode'] ?? null;
-        $this->externalReference = $input['externalReference'] ?? null;
-        $this->notificationDisabled = $input['notificationDisabled'] ?? null;
-        $this->additionalEmails = $input['additionalEmails'] ?? null;
-        $this->municipalInscription = $input['municipalInscription'] ?? null;
-        $this->stateInscription = $input['stateInscription'] ?? null;
-        $this->observations = $input['observations'] ?? null;
-        $this->groupName = $input['groupName'] ?? null;
-        $this->company = $input['company'] ?? null;
-        $this->foreignCustomer = $input['foreignCustomer'] ?? null;
-
         $this->validate();
+
+        $this->id = $this->input['id'] ?? null;
+        $this->name = $this->input['name'] ?? null;
+        $this->cpfCnpj = $this->getDocument();
+        $this->email = $this->input['email'] ?? null;
+        $this->phone = $this->input['phone'] ?? null;
+        $this->mobilePhone = $this->input['mobilePhone'] ?? null;
+        $this->address = $this->input['address'] ?? null;
+        $this->addressNumber = $this->input['addressNumber'] ?? null;
+        $this->complement = $this->input['complement'] ?? null;
+        $this->province = $this->input['province'] ?? null;
+        $this->postalCode = $this->input['postalCode'] ?? null;
+        $this->externalReference = $this->input['externalReference'] ?? null;
+        $this->notificationDisabled = $this->input['notificationDisabled'] ?? null;
+        $this->additionalEmails = $this->input['additionalEmails'] ?? null;
+        $this->municipalInscription = $this->input['municipalInscription'] ?? null;
+        $this->stateInscription = $this->input['stateInscription'] ?? null;
+        $this->observations = $this->input['observations'] ?? null;
+        $this->groupName = $this->input['groupName'] ?? null;
+        $this->company = $this->input['company'] ?? null;
+        $this->foreignCustomer = $this->input['foreignCustomer'] ?? null;
     }
 
     /**
@@ -86,28 +86,26 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
      */
     public function validate(): void
     {
-        if (empty($this->name) || $this->name === null) {
+        if (empty($this->input['name']) || $this->input['name'] === null) {
             throw new InvalidArgumentException('O nome do cliente deve ser informado');
         }
 
-        if (empty($this->cpfCnpj) || $this->cpfCnpj === null) {
-            throw new InvalidArgumentException('O cpf ou cnpj do cliente deve ser informado');
-        }
-
-        $this->cpfCnpj = $this->getDocument();
-
-        if ($this->complement !== null && strlen($this->complement) > 255) {
+        if (isset($this->input['complement']) && $this->input['complement'] !== null && strlen($this->input['complement']) > 255) {
             throw new InvalidArgumentException('O complemento do endereço deve ter no máximo 255 caracteres');
         }
     }
 
     private function getDocument(): string
     {
-        if (strlen(preg_replace('/\D/', '', $this->cpfCnpj)) === 11) {
-            return (new Cpf($this->cpfCnpj))->get();
+        if (empty($this->input['cpfCnpj']) || $this->input['cpfCnpj'] === null) {
+            throw new InvalidArgumentException('O Cpf ou Cnpj do cliente deve ser informado');
         }
 
-        return (new Cnpj($this->cpfCnpj))->get();
+        if (strlen(preg_replace('/\D/', '', $this->input['cpfCnpj'])) === 11) {
+            return (new Cpf($this->input['cpfCnpj']))->get();
+        }
+
+        return (new Cnpj($this->input['cpfCnpj']))->get();
     }
 
     public function getId(): ?string
@@ -138,7 +136,7 @@ final class AsaasCustomerInput implements CustomerInput, PaymentProviderEncoderI
             'groupName' => $this->groupName,
             'company' => $this->company,
             'foreignCustomer' => $this->foreignCustomer,
-        ], fn ($value) => $value !== null);
+        ], fn($value) => $value !== null);
     }
 
     public function __toString(): string

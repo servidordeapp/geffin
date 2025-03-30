@@ -4,65 +4,65 @@ namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use App\Contracts\Customer\CustomerOutput;
 
-final class AsaasCustomerOutput implements CustomerOutput
+final readonly class AsaasCustomerOutput implements CustomerOutput
 {
-    public ?string $id = null;
+    public ?string $id;
 
-    public ?string $dateCreated = null;
+    public ?string $dateCreated;
 
-    public ?string $name = null;
+    public ?string $name;
 
-    public ?string $email = null;
+    public ?string $email;
 
-    public ?string $company = null;
+    public ?string $company;
 
-    public ?string $phone = null;
+    public ?string $phone;
 
-    public ?string $mobilePhone = null;
+    public ?string $mobilePhone;
 
-    public ?string $address = null;
+    public ?string $address;
 
-    public ?string $addressNumber = null;
+    public ?string $addressNumber;
 
-    public ?string $complement = null;
+    public ?string $complement;
 
-    public ?string $province = null;
+    public ?string $province;
 
-    public ?string $postalCode = null;
+    public ?string $postalCode;
 
-    public ?string $cpfCnpj = null;
+    public ?string $cpfCnpj;
 
-    public ?string $personType = null;
+    public ?string $personType;
 
-    public ?string $deleted = null;
+    public ?string $deleted;
 
-    public ?string $additionalEmails = null;
+    public ?string $additionalEmails;
 
-    public ?string $externalReference = null;
+    public ?string $externalReference;
 
-    public bool $notificationDisabled;
+    public ?bool $notificationDisabled;
 
-    public ?string $observations = null;
+    public ?string $observations;
 
-    public ?string $municipalInscription = null;
+    public ?string $municipalInscription;
 
-    public ?string $stateInscription = null;
+    public ?string $stateInscription;
 
-    public bool $canDelete;
+    public ?bool $canDelete;
 
-    public ?string $cannotBeDeletedReason = null;
+    public ?string $cannotBeDeletedReason;
 
-    public bool $canEdit;
+    public ?bool $canEdit;
 
-    public ?string $cannotEditReason = null;
+    public ?string $cannotEditReason;
 
-    public ?string $city = null;
+    public ?string $city;
 
-    public ?string $cityName = null;
+    public ?string $cityName;
 
-    public ?string $state = null;
+    public ?string $state;
 
-    public ?string $country = null;
+    public ?string $country;
 
     /**
      * Summary of __construct
@@ -141,5 +141,10 @@ final class AsaasCustomerOutput implements CustomerOutput
     public function __toString(): string
     {
         return json_encode($this->__toArray());
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }

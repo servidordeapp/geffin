@@ -4,17 +4,17 @@ namespace App\Contracts\Customer;
 
 interface CustomerInterface
 {
-    public function get(): array;
+    public static function get(array $values): array;
 
-    public function search(array $values): array;
+    public static function find(string $id): CustomerOutput;
+    
+    public static function first(): CustomerOutput;
 
-    public function find(string $id): CustomerOutput;
+    public static function create(array $data): CustomerOutput;
 
-    public function create(array $data): CustomerOutput;
+    public static function update(string $id, array $data): CustomerOutput;
 
-    public function update(string $id, array $data): CustomerOutput;
+    public static function delete(string $id): bool;
 
-    public function deleteCustomer(string $id): bool;
-
-    public function restoreCustomer(string $id): CustomerOutput;
+    public static function restore(string $id): CustomerOutput;
 }

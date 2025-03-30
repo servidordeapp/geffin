@@ -6,7 +6,6 @@ use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
 
 it('can not create a customer with an invalid CPF', function () {
     // Arrange
-    $paymentGatewayCustomer = new AsaasCustomer;
     $customerData = [
         'name' => 'John Doe',
         'email' => 'john.doe@example.com',
@@ -14,13 +13,12 @@ it('can not create a customer with an invalid CPF', function () {
     ];
 
     // Act
-    expect(fn () => $paymentGatewayCustomer->create($customerData))
+    expect(fn () => AsaasCustomer::create($customerData))
         ->toThrow(InvalidDocumentException::class);
 });
 
 it('creates a customer of type CustomerOutput when create a customer in payment gateway', function () {
     // Arrange
-    $paymentGatewayCustomer = new AsaasCustomer;
     $customerData = [
         'name' => 'John Doe',
         'email' => 'john.doe@example.com',
@@ -28,7 +26,7 @@ it('creates a customer of type CustomerOutput when create a customer in payment 
     ];
 
     // Act
-    $customer = $paymentGatewayCustomer->create($customerData);
+    $customer = AsaasCustomer::create($customerData);
 
     // Assert
     expect($customer)
@@ -37,20 +35,18 @@ it('creates a customer of type CustomerOutput when create a customer in payment 
 
 it('throws exception when creating customer with missing data', function () {
     // Arrange
-    $paymentGatewayCustomer = new AsaasCustomer;
     $invalidCustomerData = [
         'name' => 'John Doe',
         // email faltando
     ];
 
     // Act & Assert
-    expect(fn () => $paymentGatewayCustomer->create($invalidCustomerData))
+    expect(fn () => AsaasCustomer::create($invalidCustomerData))
         ->toThrow(InvalidArgumentException::class);
 });
 
 it('generates a customer string id when creating new customer', function () {
     // Arrange
-    $paymentGatewayCustomer = new AsaasCustomer;
     $customerData = [
         'name' => 'John Doe',
         'email' => 'john.doe@example.com',
@@ -58,7 +54,7 @@ it('generates a customer string id when creating new customer', function () {
     ];
 
     // Act
-    $customer = $paymentGatewayCustomer->create($customerData);
+    $customer = AsaasCustomer::create($customerData);
 
     // Assert
     expect($customer)->id->toBeString();
