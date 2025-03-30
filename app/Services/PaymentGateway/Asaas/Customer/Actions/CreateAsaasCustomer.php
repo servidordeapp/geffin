@@ -15,26 +15,22 @@ final class CreateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
 
-    private AsaasCustomerInput $customer;
-
-    public function __construct(
-        array $data,
-    ) {
+    public function __construct()
+    {
         parent::__construct();
-        $this->customer = new AsaasCustomerInput($data);
     }
 
     /**
      * Summary of executearray
      *
-     * @param  array  $data
-     *
      * @throws \App\Exceptions\InvalidDocumentException
      */
-    public function execute(): AsaasCustomerOutput
+    public function execute(array $data): AsaasCustomerOutput
     {
+        $customer = new AsaasCustomerInput($data);
+
         try {
-            $httpResponse = $this->makeRequest($this->customer, httpMethod: 'POST');
+            $httpResponse = $this->makeRequest($customer, httpMethod: 'POST');
 
             return new AsaasCustomerOutput(httpResponse: $httpResponse);
         } catch (RequestException $requestException) {

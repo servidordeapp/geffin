@@ -32,7 +32,7 @@ final class AsaasCustomer implements CustomerInterface
 
     public static function create(array $data): CustomerOutput
     {
-        return (new CreateAsaasCustomer($data))->execute();
+        return (new CreateAsaasCustomer)->execute($data);
     }
 
     public static function update(string $id, array $data): CustomerOutput
