@@ -2,15 +2,14 @@
 
 use App\Exceptions\CustomerNotFoundException;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\DeleteAsaasCustomer;
-use App\Services\PaymentGateway\Asaas\Customer\Actions\ListAsaasCustomers;
+use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
 
 it('can delete a custormer', function () {
     // Arrange
-    $customerList = (new ListAsaasCustomers)->execute(['limit' => 1]);
-    $customer = $customerList['data'][0];
+    $customer = AsaasCustomer::first();
 
     // Act
-    $result = (new DeleteAsaasCustomer)->execute($customer->id);
+    $result = (new DeleteAsaasCustomer)->execute($customer->getId());
 
     // Assert
     expect($result)->toBe(true);
@@ -19,13 +18,12 @@ it('can delete a custormer', function () {
 
 it('can delete a custormer already deleted', function () {
     // Arrange
-    $customerList = (new ListAsaasCustomers)->execute(['limit' => 1]);
-    $customer = $customerList['data'][0];
+    $customer = AsaasCustomer::first();
 
     // Act
-    $result = (new DeleteAsaasCustomer)->execute($customer->id);
+    $result = (new DeleteAsaasCustomer)->execute($customer->getId());
     expect($result)->toBe(true);
-    $result = (new DeleteAsaasCustomer)->execute($customer->id);
+    $result = (new DeleteAsaasCustomer)->execute($customer->getId());
 
     // Assert
     expect($result)->toBe(true);
