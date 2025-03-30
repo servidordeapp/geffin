@@ -7,7 +7,7 @@ use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerOutput;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\ListAsaasCustomersParameters;
 use App\Traits\CanMakeRequest;
 
-class ListAsaasCustomers extends Customer
+final class ListAsaasCustomers extends Customer
 {
     use CanMakeRequest;
 

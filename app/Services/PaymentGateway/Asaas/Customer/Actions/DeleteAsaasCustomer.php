@@ -9,7 +9,7 @@ use Error;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Response;
 
-class DeleteAsaasCustomer extends Customer
+final class DeleteAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 

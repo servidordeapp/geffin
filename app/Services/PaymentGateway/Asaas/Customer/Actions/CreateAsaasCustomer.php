@@ -9,7 +9,7 @@ use App\Traits\CanMakeRequestWithBody;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
 
-class CreateAsaasCustomer extends Customer
+final class CreateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
 

@@ -9,7 +9,7 @@ use App\Services\PaymentGateway\Asaas\Customer\Actions\GetAsaasCustomer;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\ListAsaasCustomers;
 use Exception;
 
-class AsaasCustomer implements CustomerInterface
+final class AsaasCustomer implements CustomerInterface
 {
     public static function get(array $values): array
     {

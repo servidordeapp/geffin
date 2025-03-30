@@ -7,7 +7,7 @@ use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerInput;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerOutput;
 use App\Traits\CanMakeRequestWithBody;
 
-class UpdateAsaasCustomer extends Customer
+final class UpdateAsaasCustomer extends Customer
 {
     use CanMakeRequestWithBody;
 

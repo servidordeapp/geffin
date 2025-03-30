@@ -6,7 +6,7 @@ use App\Services\PaymentGateway\Asaas\Core\Customer;
 use App\Services\PaymentGateway\Asaas\Customer\Concerns\AsaasCustomerOutput;
 use App\Traits\CanMakeRequest;
 
-class RestoreAsaasCustomer extends Customer
+final class RestoreAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 

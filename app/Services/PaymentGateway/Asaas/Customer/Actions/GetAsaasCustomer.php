@@ -10,7 +10,7 @@ use Error;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetAsaasCustomer extends Customer
+final class GetAsaasCustomer extends Customer
 {
     use CanMakeRequest;
 
