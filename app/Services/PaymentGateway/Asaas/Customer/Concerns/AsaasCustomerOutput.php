@@ -34,7 +34,7 @@ final readonly class AsaasCustomerOutput implements CustomerOutput
 
     public ?string $personType;
 
-    public ?string $deleted;
+    public ?bool $deleted;
 
     public ?string $additionalEmails;
 
