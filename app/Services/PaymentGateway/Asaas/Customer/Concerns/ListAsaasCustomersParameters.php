@@ -4,7 +4,7 @@ namespace App\Services\PaymentGateway\Asaas\Customer\Concerns;
 
 use InvalidArgumentException;
 
-final class ListAsaasCustomersParameters
+final readonly class ListAsaasCustomersParameters
 {
     /**
      * Summary of __construct
