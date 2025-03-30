@@ -28,6 +28,5 @@ it('can get a custormer by id', function () {
 
 it('can not get a customer that not exists', function () {
     // Assert
-    expect(fn() => AsaasCustomer::find('invalid-id'))->toThrow(CustomerNotFoundException::class);
+    expect(fn () => AsaasCustomer::find('invalid-id'))->toThrow(CustomerNotFoundException::class);
 });
-

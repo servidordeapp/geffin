@@ -31,5 +31,5 @@ it('can delete a custormer already deleted', function () {
 
 it('can not delete a custormer not saved', function () {
     // Assert
-    expect(fn() => (new DeleteAsaasCustomer)->execute('invalid-id'))->toThrow(CustomerNotFoundException::class);
+    expect(fn () => (new DeleteAsaasCustomer)->execute('invalid-id'))->toThrow(CustomerNotFoundException::class);
 });

@@ -136,7 +136,7 @@ final readonly class AsaasCustomerInput implements CustomerInput, PaymentProvide
             'groupName' => $this->groupName,
             'company' => $this->company,
             'foreignCustomer' => $this->foreignCustomer,
-        ], fn($value) => $value !== null);
+        ], fn ($value) => $value !== null);
     }
 
     public function __toString(): string

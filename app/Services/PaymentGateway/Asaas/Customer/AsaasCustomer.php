@@ -24,6 +24,7 @@ class AsaasCustomer implements CustomerInterface
     public static function first(): CustomerOutput
     {
         $response = self::get(['limit' => 1]);
+
         return $response['data'][0];
     }
 

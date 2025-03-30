@@ -7,7 +7,7 @@ interface CustomerInterface
     public static function get(array $values): array;
 
     public static function find(string $id): CustomerOutput;
-    
+
     public static function first(): CustomerOutput;
 
     public static function create(array $data): CustomerOutput;

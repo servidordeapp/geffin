@@ -25,13 +25,14 @@ class GetAsaasCustomer extends Customer
 
         try {
             $httpResponse = $this->makeRequest(httpMethod: 'GET');
+
             return new AsaasCustomerOutput(httpResponse: $httpResponse);
         } catch (RequestException $requestException) {
             if ($requestException->getCode() === Response::HTTP_NOT_FOUND) {
-                throw new CustomerNotFoundException();
+                throw new CustomerNotFoundException;
             }
             throw new Error(
-                message: 'Erro ao buscar o cliente: ' . $requestException->getMessage(),
+                message: 'Erro ao buscar o cliente: '.$requestException->getMessage(),
                 code: $requestException->getCode()
             );
         }

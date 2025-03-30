@@ -28,7 +28,7 @@ class DeleteAsaasCustomer extends Customer
             }
         } catch (RequestException $requestException) {
             if ($requestException->getCode() === Response::HTTP_NOT_FOUND) {
-                throw new CustomerNotFoundException();
+                throw new CustomerNotFoundException;
             }
             throw new Error(
                 message: 'Erro ao deletar o cliente: '.$requestException->getMessage(),
