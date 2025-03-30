@@ -9,7 +9,7 @@ use App\Services\PaymentGateway\Asaas\Customer\Actions\DeleteAsaasCustomer;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\GetAsaasCustomer;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\ListAsaasCustomers;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\RestoreAsaasCustomer;
-use Exception;
+use App\Services\PaymentGateway\Asaas\Customer\Actions\UpdateAsaasCustomer;
 
 final class AsaasCustomer implements CustomerInterface
 {
@@ -37,7 +37,7 @@ final class AsaasCustomer implements CustomerInterface
 
     public static function update(string $id, array $data): CustomerOutput
     {
-        throw new Exception('Nao implementado');
+        return (new UpdateAsaasCustomer)->execute($id, $data);
     }
 
     public static function delete(string $id): bool

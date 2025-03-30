@@ -12,7 +12,7 @@ describe('Restore Asaas Customer', function () {
         AsaasCustomer::restore($customer->getId());
 
         // Assert
-        expect(AsaasCustomer::find($customer->getId())->deleted)->toBeFalse();
+        expect(AsaasCustomer::find($customer->getId()))->deleted->toBeFalse();
     });
 
     it('can not restore a customer that not exists', function () {
@@ -20,4 +20,3 @@ describe('Restore Asaas Customer', function () {
         expect(fn () => AsaasCustomer::restore('invalid-id'))->toThrow(CustomerNotFoundException::class);
     });
 });
-

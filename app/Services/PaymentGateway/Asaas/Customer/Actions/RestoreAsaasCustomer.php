@@ -27,10 +27,10 @@ final class RestoreAsaasCustomer extends Customer
             return new AsaasCustomerOutput($this->makeRequest(httpMethod: 'POST'));
         } catch (RequestException $requestException) {
             if ($requestException->getCode() === Response::HTTP_NOT_FOUND) {
-                throw new CustomerNotFoundException();
+                throw new CustomerNotFoundException;
             }
             throw new Error(
-                'Erro ao restaurar o cliente: ' . $requestException->getMessage(),
+                'Erro ao restaurar o cliente: '.$requestException->getMessage(),
                 $requestException->getCode()
             );
         }
