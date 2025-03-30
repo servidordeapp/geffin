@@ -5,6 +5,7 @@ namespace App\Services\PaymentGateway\Asaas\Customer;
 use App\Contracts\Customer\CustomerInterface;
 use App\Contracts\Customer\CustomerOutput;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\CreateAsaasCustomer;
+use App\Services\PaymentGateway\Asaas\Customer\Actions\DeleteAsaasCustomer;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\GetAsaasCustomer;
 use App\Services\PaymentGateway\Asaas\Customer\Actions\ListAsaasCustomers;
 use Exception;
@@ -40,7 +41,7 @@ final class AsaasCustomer implements CustomerInterface
 
     public static function delete(string $id): bool
     {
-        throw new Exception('Nao implementado');
+        return (new DeleteAsaasCustomer)->execute($id);
     }
 
     public static function restore(string $id): CustomerOutput
