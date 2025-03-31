@@ -19,7 +19,7 @@ trait HasTenant
         }
     }
 
-    public function Tenant(): BelongsTo
+    public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
     }

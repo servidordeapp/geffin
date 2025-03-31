@@ -13,7 +13,7 @@ class TenantScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if (sessionHasTenant()) {
+        if (sessionHasTenant()) { // && auth()->user()->is_admin === false
             $builder->where('tenant_id', session()->get('tenant_id'));
         }
     }
