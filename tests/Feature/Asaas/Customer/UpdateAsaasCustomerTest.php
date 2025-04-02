@@ -1,7 +1,7 @@
 <?php
 
-use App\Exceptions\CustomerNotFoundException;
-use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
+use App\Services\PaymentGateway\Exceptions\CustomerNotFoundException;
+use App\Services\PaymentGateway\Providers\Asaas\Customer\AsaasCustomer;
 
 describe('update customer', function () {
     it('can update a customer', function () {

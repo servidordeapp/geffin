@@ -18,6 +18,7 @@ class Tenant extends Model
         'plan_id',
         'phone',
         'status',
+        'document',
     ];
 
     public function users(): HasMany

@@ -1,8 +1,8 @@
 <?php
 
-use App\Contracts\Customer\CustomerOutput;
 use App\Exceptions\InvalidDocumentException;
-use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
+use App\Services\PaymentGateway\Customer\CustomerOutput;
+use App\Services\PaymentGateway\Providers\Asaas\Customer\AsaasCustomer;
 
 it('can not create a customer with an invalid CPF', function () {
     // Arrange

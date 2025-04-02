@@ -1,8 +1,8 @@
 <?php
 
-use App\Contracts\Customer\CustomerOutput;
-use App\Exceptions\CustomerNotFoundException;
-use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
+use App\Services\PaymentGateway\Customer\CustomerOutput;
+use App\Services\PaymentGateway\Exceptions\CustomerNotFoundException;
+use App\Services\PaymentGateway\Providers\Asaas\Customer\AsaasCustomer;
 
 it('returns a Customer of the type of CustomerOutput', function () {
     // Arrange

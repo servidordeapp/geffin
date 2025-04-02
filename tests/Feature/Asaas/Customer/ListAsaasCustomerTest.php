@@ -1,7 +1,7 @@
 <?php
 
-use App\Contracts\Customer\CustomerOutput;
-use App\Services\PaymentGateway\Asaas\Customer\AsaasCustomer;
+use App\Services\PaymentGateway\Customer\CustomerOutput;
+use App\Services\PaymentGateway\Providers\Asaas\Customer\AsaasCustomer;
 
 describe('list customers', function () {
     it('returns a List of Customers of the type of CustomerOutput', function ($offset, $limit) {
