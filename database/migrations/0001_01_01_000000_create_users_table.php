@@ -28,16 +28,16 @@ return new class extends Migration
         DB::table('users')->updateOrInsert([
             'email' => 'bruno@admin.com',
         ],
-        [
-            'name' => 'Bruno Oliveira',
-            'email' => 'bruno@admin.com',
-            'tenant_id' => '80d0491e-28ef-4a0f-96e0-72411a853097',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            [
+                'name' => 'Bruno Oliveira',
+                'email' => 'bruno@admin.com',
+                'tenant_id' => '80d0491e-28ef-4a0f-96e0-72411a853097',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

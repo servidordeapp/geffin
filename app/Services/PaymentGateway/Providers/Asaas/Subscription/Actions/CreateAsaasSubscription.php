@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\PaymentGateway\Providers\Asaas\Subscription;
+namespace App\Services\PaymentGateway\Providers\Asaas\Subscription\Actions;
 
 use App\Services\PaymentGateway\Providers\Asaas\Core\Subscription;
 use App\Services\PaymentGateway\Providers\Asaas\Subscription\Concerns\AsaasSubscriptionInput;
@@ -16,9 +16,10 @@ class CreateAsaasSubscription extends Subscription
         parent::__construct();
     }
 
-    public function execute(AsaasSubscriptionInput $subscriptionInput): AsaasSubscriptionOutput
+    public function execute(array $data): AsaasSubscriptionOutput
     {
-        $httpResponse = $this->makeRequest($subscriptionInput, httpMethod: 'POST');
+        $subscription = new AsaasSubscriptionInput($data);
+        $httpResponse = $this->makeRequest($subscription, httpMethod: 'POST');
 
         return new AsaasSubscriptionOutput($httpResponse);
     }

@@ -55,9 +55,9 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function (User $user) {
-            if (!sessionHasTenant()) {
+            if (! sessionHasTenant()) {
                 $slug = Str::slug($user->name);
-                $finalSlug = Tenant::firstWhere('slug', $slug) ? $slug . '-' . Str::random(8) : $slug;
+                $finalSlug = Tenant::firstWhere('slug', $slug) ? $slug.'-'.Str::random(8) : $slug;
                 $tenant = Tenant::create([
                     'name' => $user->name,
                     'email' => $user->email,

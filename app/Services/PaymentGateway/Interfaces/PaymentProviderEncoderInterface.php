@@ -4,5 +4,6 @@ namespace App\Services\PaymentGateway\Interfaces;
 
 interface PaymentProviderEncoderInterface
 {
-    public function __toString(): string;
+    public function toString(): string;
+    public function toArray(): array;
 }

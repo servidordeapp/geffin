@@ -16,7 +16,7 @@ trait CanMakeRequestWithBody
     {
         $httpClient = new Client;
         $response = $httpClient->request(strtoupper($httpMethod), $this->url, [
-            'body' => $encodedData,
+            'body' => $encodedData->toString(),
             'headers' => $this->httpHeaders,
         ]);
 

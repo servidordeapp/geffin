@@ -29,15 +29,15 @@ return new class extends Migration
         DB::table('tenants')->updateOrInsert([
             'id' => '80d0491e-28ef-4a0f-96e0-72411a853097',
         ],
-        [
-            'id' => '80d0491e-28ef-4a0f-96e0-72411a853097',
-            'plan_id' => 1,
-            'name' => 'Tenant Principal',
-            'slug' => 'tenant-principal',
-            'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            [
+                'id' => '80d0491e-28ef-4a0f-96e0-72411a853097',
+                'plan_id' => 1,
+                'name' => 'Tenant Principal',
+                'slug' => 'tenant-principal',
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
     }
 
     /**

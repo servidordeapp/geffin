@@ -113,7 +113,7 @@ final readonly class AsaasCustomerInput implements CustomerInput, PaymentProvide
         return $this->id;
     }
 
-    public function __toArray(): array
+    public function toArray(): array
     {
         return array_filter([
             'id' => $this->id,
@@ -139,8 +139,8 @@ final readonly class AsaasCustomerInput implements CustomerInput, PaymentProvide
         ], fn ($value) => $value !== null);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return json_encode($this->__toArray());
+        return json_encode($this->toArray());
     }
 }

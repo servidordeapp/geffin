@@ -29,7 +29,7 @@ final class GetAsaasCustomer extends Customer
             return new AsaasCustomerOutput(httpResponse: $httpResponse);
         } catch (RequestException $requestException) {
             if ($requestException->getCode() === Response::HTTP_NOT_FOUND) {
-                throw new CustomerNotFoundException();
+                throw new CustomerNotFoundException;
             }
             throw new Error(
                 message: 'Erro ao buscar o cliente: '.$requestException->getMessage(),

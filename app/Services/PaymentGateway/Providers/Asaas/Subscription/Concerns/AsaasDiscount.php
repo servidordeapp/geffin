@@ -6,7 +6,7 @@ use App\Services\PaymentGateway\Interfaces\PaymentProviderEncoderInterface;
 use App\Services\PaymentGateway\Providers\Asaas\Subscription\Enums\AsaasDiscountTypeEnum;
 use InvalidArgumentException;
 
-final class AsaasDiscount implements PaymentProviderEncoderInterface
+final readonly class AsaasDiscount implements PaymentProviderEncoderInterface
 {
     /**
      * Summary of __construct
@@ -15,7 +15,7 @@ final class AsaasDiscount implements PaymentProviderEncoderInterface
      * @param  mixed  $dueDateLimitDays  Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante
      * @param  \App\Services\PaymentGateway\Providers\Asaas\Subscription\Enums\AsaasDiscountTypeEnum  $type  Tipo de desconto
      */
-    private function __construct(
+    public function __construct(
         private ?float $value = null,
         private ?int $dueDateLimitDays = 0,
         private ?AsaasDiscountTypeEnum $type = null,
@@ -25,16 +25,16 @@ final class AsaasDiscount implements PaymentProviderEncoderInterface
         }
     }
 
-    private function toArray(): array
+    public function toArray(): array
     {
         return array_filter([
             'value' => $this->value,
             'dueDateLimitDays' => $this->dueDateLimitDays,
             'type' => $this->type,
-        ], fn ($value) => $value !== null);
+        ], fn ($value) => $value !== null && $value !== 0);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return json_encode($this->toArray());
     }
