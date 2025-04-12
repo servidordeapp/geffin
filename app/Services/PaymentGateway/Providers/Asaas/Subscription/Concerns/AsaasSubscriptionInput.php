@@ -59,7 +59,7 @@ final readonly class AsaasSubscriptionInput implements PaymentProviderEncoderInt
         $this->nextDueDate = $data['nextDueDate'];
         $this->discount = new AsaasDiscount(...$data['discount'] ?? []) ?? null;
         $this->cycle = $data['cycle'];
-        $this->description = $data['description' ] ?? null;
+        $this->description = $data['description'] ?? null;
         $this->endDate = $data['endDate'] ?? null;
         $this->maxPayments = $data['maxPayments'] ?? null;
         $this->externalReference = $data['externalReference'];
@@ -67,43 +67,43 @@ final readonly class AsaasSubscriptionInput implements PaymentProviderEncoderInt
 
     private function validate(): void
     {
-        if (!array_key_exists('customer', $this->data)) {
+        if (! array_key_exists('customer', $this->data)) {
             throw new InvalidArgumentException('O identificador único do cliente no Asaas deve ser informado');
         }
 
-        if (!array_key_exists('billingType', $this->data)) {
+        if (! array_key_exists('billingType', $this->data)) {
             throw new InvalidArgumentException('A forma de pagamento deve ser informada');
         }
 
-        if (!$this->data['billingType'] instanceof AsaasBilingTypesEnum) {
-            throw new InvalidArgumentException('A periodicidade da cobrança deve do tipo ' . AsaasBilingTypesEnum::class . ' e deve ser informada');
+        if (! $this->data['billingType'] instanceof AsaasBilingTypesEnum) {
+            throw new InvalidArgumentException('A periodicidade da cobrança deve do tipo '.AsaasBilingTypesEnum::class.' e deve ser informada');
         }
 
-        if (!array_key_exists('value', $this->data)) {
+        if (! array_key_exists('value', $this->data)) {
             throw new InvalidArgumentException('O valor da assinatura deve ser informado');
         }
 
-        if (!array_key_exists('nextDueDate', $this->data)) {
+        if (! array_key_exists('nextDueDate', $this->data)) {
             throw new InvalidArgumentException('A data de vencimento da primeira cobrança deve ser informada');
         }
 
-        if (!array_key_exists('cycle', $this->data)) {
+        if (! array_key_exists('cycle', $this->data)) {
             throw new InvalidArgumentException('A periodicidade da cobrança deve ser informada');
         }
 
-        if (!$this->data['cycle'] instanceof AsaasBillingCycleEnum) {
-            throw new InvalidArgumentException('A periodicidade da cobrança deve do tipo ' . AsaasBillingCycleEnum::class . ' e deve ser informada');
+        if (! $this->data['cycle'] instanceof AsaasBillingCycleEnum) {
+            throw new InvalidArgumentException('A periodicidade da cobrança deve do tipo '.AsaasBillingCycleEnum::class.' e deve ser informada');
         }
 
-        if (!array_key_exists('externalReference', $this->data)) {
+        if (! array_key_exists('externalReference', $this->data)) {
             throw new InvalidArgumentException('O identificador da assinatura no seu sistema deve ser informado');
         }
 
         if (isset(($this->data['description'])) && strlen($this->data['description']) > 500) {
-            throw new InvalidArgumentException('A descrição da assinatura deve ter no máximo 500 caracteres. (Atual: ' . strlen($this->description) . ' caracteres)');
+            throw new InvalidArgumentException('A descrição da assinatura deve ter no máximo 500 caracteres. (Atual: '.strlen($this->description).' caracteres)');
         }
 
-        if ($this->data['nextDueDate']->get() < (new Trial())->get()) {
+        if ($this->data['nextDueDate']->get() < (new Trial)->get()) {
             throw new InvalidArgumentException('A data de vencimento da primeira cobrança deve ser posterior ou igual ao dia atual.');
         }
 
@@ -129,7 +129,7 @@ final readonly class AsaasSubscriptionInput implements PaymentProviderEncoderInt
             'endDate' => $this->endDate,
             'maxPayments' => $this->maxPayments,
             'externalReference' => $this->externalReference,
-        ], fn($value) => $value !== null && !empty($value));
+        ], fn ($value) => $value !== null && ! empty($value));
     }
 
     public function toString(): string

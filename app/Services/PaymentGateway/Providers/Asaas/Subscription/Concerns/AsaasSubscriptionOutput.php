@@ -70,9 +70,9 @@ final class AsaasSubscriptionOutput
         $this->maxPayments = $httpResponse['maxPayments'] ?? null;
         $this->sendPaymentByPostalService = $httpResponse['sendPaymentByPostalService'] ?? null;
         $this->discount = [
-            "value" => $httpResponse['discount']['value'] ?? null,
-            "dueDateLimitDays" => $httpResponse['discount']['dueDateLimitDays'] ?? null,
-            "type" => $httpResponse['discount']['type'] ?? null
+            'value' => $httpResponse['discount']['value'] ?? null,
+            'dueDateLimitDays' => $httpResponse['discount']['dueDateLimitDays'] ?? null,
+            'type' => $httpResponse['discount']['type'] ?? null,
         ];
         $this->fine = [
             'value' => $httpResponse['fine']['value'] ?? null,
@@ -109,7 +109,7 @@ final class AsaasSubscriptionOutput
             'discount' => $this->discount,
             'fine' => $this->fine,
             'interest' => $this->interest,
-        ], fn($value) => $value !== null);
+        ], fn ($value) => $value !== null);
     }
 
     public function toString(): string

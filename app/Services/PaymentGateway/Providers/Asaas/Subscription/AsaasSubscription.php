@@ -6,7 +6,6 @@ use App\Services\PaymentGateway\Providers\Asaas\Subscription\Actions\CreateAsaas
 use App\Services\PaymentGateway\Providers\Asaas\Subscription\Concerns\AsaasSubscriptionOutput;
 use App\Services\PaymentGateway\Subscription\SubscriptionInterface;
 use Exception;
-use GuzzleHttp\Promise\Create;
 
 class AsaasSubscription implements SubscriptionInterface
 {
@@ -33,7 +32,6 @@ class AsaasSubscription implements SubscriptionInterface
     public static function create(array $data): AsaasSubscriptionOutput
     {
         return (new CreateAsaasSubscription)->execute($data);
-        // throw new Exception('Não implementado');
     }
 
     public static function update(string $id, array $data)
