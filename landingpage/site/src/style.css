@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.bg-primary {
+    background-color: #2A5CAA;
+}
+
+.bg-secondary {
+    background-color: #34C759;
+}
+
+.text-primary {
+    color: #2A5CAA;
+}
+
+.text-secondary {
+    color: #34C759;
+}
+
+.hover-grow {
+    transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+    transform: scale(1.03);
+}
+
+.featured-plan {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(42, 92, 170, 0.2);
+}

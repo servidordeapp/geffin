@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de ROI do Geffin</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .results {
+      margin-top: 20px;
+      background-color: #e9f7ef;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .result-item {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #16a085;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #eee;
+      border: none;
+      outline: none;
+    }
+
+    .tab.active {
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .chart-container {
+      height: 300px;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .bar {
+      position: absolute;
+      bottom: 0;
+      width: 40px;
+      background-color: #3498db;
+      transition: height 0.5s ease;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .bar-label {
+      position: absolute;
+      bottom: -25px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .bar-value {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: -20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Calculadora de ROI do Geffin</h1>
+
+      <div class="tabs">
+        <button
+          class="tab"
+          :class="{ active: activeTab === 'input' }"
+          @click="activeTab = 'input'"
+        >Dados de Entrada</button>
+        <button
+          class="tab"
+          :class="{ active: activeTab === 'results' }"
+          @click="activeTab = 'results'"
+        >Resultados</button>
+        <button
+          class="tab"
+          :class="{ active: activeTab === 'chart' }"
+          @click="activeTab = 'chart'"
+        >Gráfico</button>
+      </div>
+
+      <div v-if="activeTab === 'input'">
+        <div class="form-group">
+          <label for="custoImplementacao">Custo de Implementação do Geffin (R$):</label>
+          <input type="number" id="custoImplementacao" v-model.number="custoImplementacao" min="0" step="1000">
+        </div>
+
+        <div class="form-group">
+          <label for="custoMensal">Custo Mensal do Geffin (R$):</label>
+          <input type="number" id="custoMensal" v-model.number="custoMensal" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="reducaoTempoProcessamento">Redução do Tempo de Processamento (%):</label>
+          <input type="number" id="reducaoTempoProcessamento" v-model.number="reducaoTempoProcessamento" min="0" max="100">
+        </div>
+
+        <div class="form-group">
+          <label for="horasTrabalhoMensal">Horas de Trabalho Mensal da Equipe:</label>
+          <input type="number" id="horasTrabalhoMensal" v-model.number="horasTrabalhoMensal" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="custoHora">Custo Médio por Hora da Equipe (R$):</label>
+          <input type="number" id="custoHora" v-model.number="custoHora" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="reducaoErros">Redução de Erros/Retrabalho (%):</label>
+          <input type="number" id="reducaoErros" v-model.number="reducaoErros" min="0" max="100">
+        </div>
+
+        <div class="form-group">
+          <label for="custoErroMedio">Custo Médio por Erro (R$):</label>
+          <input type="number" id="custoErroMedio" v-model.number="custoErroMedio" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="numeroErrosMensal">Número Médio de Erros Mensais:</label>
+          <input type="number" id="numeroErrosMensal" v-model.number="numeroErrosMensal" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="periodoAnalise">Período de Análise (meses):</label>
+          <input type="number" id="periodoAnalise" v-model.number="periodoAnalise" min="1" max="60">
+        </div>
+      </div>
+
+      <div v-if="activeTab === 'results'">
+        <div class="results">
+          <div class="result-item">
+            <span>Economia Mensal com Eficiência:</span>
+            <span>R$ {{ formatNumber(economiaMensalEficiencia) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>Economia Mensal com Redução de Erros:</span>
+            <span>R$ {{ formatNumber(economiaMensalErros) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>Economia Total Mensal:</span>
+            <span>R$ {{ formatNumber(economiaTotalMensal) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>Investimento Total ({{ periodoAnalise }} meses):</span>
+            <span>R$ {{ formatNumber(investimentoTotal) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>Economia Total ({{ periodoAnalise }} meses):</span>
+            <span>R$ {{ formatNumber(economiaTotalPeriodo) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>Lucro Líquido:</span>
+            <span>R$ {{ formatNumber(lucroLiquido) }}</span>
+          </div>
+
+          <div class="result-item">
+            <span>ROI (%):</span>
+            <span class="highlight">{{ formatNumber(roi) }}%</span>
+          </div>
+
+          <div class="result-item">
+            <span>Tempo de Payback:</span>
+            <span class="highlight">{{ paybackMeses }} meses</span>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="activeTab === 'chart'">
+        <h3>Retorno do Investimento ao Longo do Tempo</h3>
+        <div class="chart-container">
+          <div
+            v-for="(valor, index) in fluxoCaixa"
+            :key="index"
+            class="bar"
+            :style="{
+              height: `${Math.min(Math.abs(valor / valorMaximoGrafico * 250), 250)}px`,
+              left: `${index * 60 + 50}px`,
+              backgroundColor: valor < 0 ? '#e74c3c' : '#2ecc71'
+            }"
+          >
+            <div class="bar-value">R$ {{ formatNumber(valor) }}</div>
+            <div class="bar-label">Mês {{ index }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, computed, watch } = Vue;
+
+    createApp({
+      setup() {
+        const activeTab = ref('input');
+
+        // Dados de entrada
+        const custoImplementacao = ref(50000);
+        const custoMensal = ref(2000);
+        const reducaoTempoProcessamento = ref(30);
+        const horasTrabalhoMensal = ref(160);
+        const custoHora = ref(150);
+        const reducaoErros = ref(50);
+        const custoErroMedio = ref(1000);
+        const numeroErrosMensal = ref(10);
+        const periodoAnalise = ref(12);
+
+        // Cálculos
+        const economiaMensalEficiencia = computed(() => {
+          return (horasTrabalhoMensal.value * custoHora.value * (reducaoTempoProcessamento.value / 100));
+        });
+
+        const economiaMensalErros = computed(() => {
+          return (numeroErrosMensal.value * custoErroMedio.value * (reducaoErros.value / 100));
+        });
+
+        const economiaTotalMensal = computed(() => {
+          return economiaMensalEficiencia.value + economiaMensalErros.value;
+        });
+
+        const investimentoTotal = computed(() => {
+          return custoImplementacao.value + (custoMensal.value * periodoAnalise.value);
+        });
+
+        const economiaTotalPeriodo = computed(() => {
+          return economiaTotalMensal.value * periodoAnalise.value;
+        });
+
+        const lucroLiquido = computed(() => {
+          return economiaTotalPeriodo.value - investimentoTotal.value;
+        });
+
+        const roi = computed(() => {
+          if (investimentoTotal.value === 0) return 0;
+          return (lucroLiquido.value / investimentoTotal.value) * 100;
+        });
+
+        const paybackMeses = computed(() => {
+          if (economiaTotalMensal.value <= custoMensal.value) return 'Nunca';
+          const economiaLiquida = economiaTotalMensal.value - custoMensal.value;
+          const meses = custoImplementacao.value / economiaLiquida;
+          return meses.toFixed(1);
+        });
+
+        // Dados para o gráfico
+        const fluxoCaixa = computed(() => {
+          const resultado = [];
+          // Mês 0: Investimento inicial negativo
+          resultado.push(-custoImplementacao.value);
+
+          for (let i = 1; i <= Math.min(periodoAnalise.value, 12); i++) {
+            const fluxoMensal = economiaTotalMensal.value - custoMensal.value;
+            resultado.push(fluxoMensal);
+          }
+
+          return resultado;
+        });
+
+        const valorMaximoGrafico = computed(() => {
+          return Math.max(
+            custoImplementacao.value,
+            ...fluxoCaixa.value.map(v => Math.abs(v))
+          );
+        });
+
+        // Formatação de números
+        const formatNumber = (num) => {
+          return new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 }).format(num);
+        };
+
+        // Mudar para a aba de resultados quando os dados estiverem preenchidos
+        watch([custoImplementacao, custoMensal, reducaoTempoProcessamento, horasTrabalhoMensal,
+              custoHora, reducaoErros, custoErroMedio, numeroErrosMensal], () => {
+          if (custoImplementacao.value && custoMensal.value && reducaoTempoProcessamento.value &&
+              horasTrabalhoMensal.value && custoHora.value && reducaoErros.value &&
+              custoErroMedio.value && numeroErrosMensal.value) {
+            // Deixar o usuário navegar manualmente para ver os resultados
+          }
+        });
+
+        return {
+          activeTab,
+          custoImplementacao,
+          custoMensal,
+          reducaoTempoProcessamento,
+          horasTrabalhoMensal,
+          custoHora,
+          reducaoErros,
+          custoErroMedio,
+          numeroErrosMensal,
+          periodoAnalise,
+          economiaMensalEficiencia,
+          economiaMensalErros,
+          economiaTotalMensal,
+          investimentoTotal,
+          economiaTotalPeriodo,
+          lucroLiquido,
+          roi,
+          paybackMeses,
+          fluxoCaixa,
+          valorMaximoGrafico,
+          formatNumber
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
