@@ -1,7 +1,12 @@
 <?php
 
-test('returns a successful response', function () {
-    $response = $this->get('/');
+use App\Models\User;
 
-    $response->assertStatus(200);
+test('User can view dashboard', function () {
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get('/dashboard')
+        ->assertStatus(200);
 });
