@@ -36,3 +36,5 @@ php artisan sentry:publish --dsn=https://examplePublicKey@o0.ingest.sentry.io/0
 ```
 
 Where you can found at [Sentry Docs](https://docs.sentry.io/platforms/php/guides/laravel/#configure) when your account logged in.
+
+https://www.mermaidchart.com/raw/ade7a6d3-ad01-4ad9-bf68-e682f6753760?theme=light&version=v0.1&format=svg

@@ -3,12 +3,12 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import GenericDataTable from '../components/GenericDataTable.vue';
+import GenericDataTable from '../../components/GenericDataTable.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Clientes',
-        href: '/clientes',
+        href: route('clientes.index'),
     },
 ];
 const searchInput = ref('');
@@ -93,8 +93,8 @@ const handleDeleteCustomer = (customer: any) => {
     customers.value = customers.value.filter((c) => c.id !== customer.id);
 };
 
-const haldleCustomerDetails = (customer: any) => {
-    console.log('Visualizando detalhes do cliente:', customer);
+const haldleCustomerBillings = (customer: any) => {
+    console.log('Visualizando faturas do cliente:', customer);
     // Adicione sua lógica para mostrar detalhes aqui
 };
 
@@ -121,29 +121,27 @@ const getSubscriptionClass = (subscription: string) => {
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <h1 class="mb-6 text-2xl font-bold">Gerenciamento de Clientes</h1>
+        <h1 class="mb-6 text-2xl font-bold">Gerenciamento de Clientes</h1>
 
-            <GenericDataTable
-                title="Lista de Clientes"
-                :items="customers"
-                :headers="tableHeaders"
-                deleteItemLabelField="name"
-                deleteConfirmationMessage="Tem certeza que deseja excluir o cliente {item}?"
-                searchPlaceholder="Buscar cliente por nome, email ou status..."
-                @search="handleSearch($event)"
-                @edit="handleEditCustomer"
-                @preview="haldleCustomerDetails"
-                @delete="handleDeleteCustomer"
-            >
-                <!-- Exemplo de coluna personalizada -->
-                <template #column-subscription="{ value }">
-                    <div class="flex items-center">
-                        <div class="badge" :class="getSubscriptionClass(value)">{{ value }}</div>
-                        <span v-if="value === 'Premium'" class="ml-1 text-yellow-500">★</span>
-                    </div>
-                </template>
-            </GenericDataTable>
-        </div>
+        <GenericDataTable
+            title="Lista de Clientes"
+            :items="customers"
+            :headers="tableHeaders"
+            deleteItemLabelField="name"
+            deleteConfirmationMessage="Tem certeza que deseja excluir o cliente {item}?"
+            searchPlaceholder="Buscar cliente por nome, email ou status..."
+            @search="handleSearch($event)"
+            @edit="handleEditCustomer"
+            @billings="haldleCustomerBillings"
+            @delete="handleDeleteCustomer"
+        >
+            <!-- Exemplo de coluna personalizada -->
+            <template #column-subscription="{ value }">
+                <div class="flex items-center">
+                    <div class="badge" :class="getSubscriptionClass(value)">{{ value }}</div>
+                    <span v-if="value === 'Premium'" class="ml-1 text-yellow-500">★</span>
+                </div>
+            </template>
+        </GenericDataTable>
     </AppLayout>
 </template>

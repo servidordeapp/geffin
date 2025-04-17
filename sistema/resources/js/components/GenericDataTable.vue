@@ -107,7 +107,7 @@
                                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                             />
                                         </svg>
-                                        {{ detailsButtonLabel }}
+                                        {{ billingsButtonLabel }}
                                     </button>
                                     <button v-if="showDeleteButton" @click="showDeleteModal(item)" class="btn btn-sm btn-error">
                                         <svg
@@ -241,9 +241,9 @@ const props = defineProps({
         type: String,
         default: 'Editar',
     },
-    detailsButtonLabel: {
+    billingsButtonLabel: {
         type: String,
-        default: 'Visualizar',
+        default: 'Cobranças',
     },
     deleteButtonLabel: {
         type: String,
@@ -274,7 +274,7 @@ const props = defineProps({
 });
 
 // Emits para eventos personalizados
-const emit = defineEmits(['edit', 'delete', 'preview', 'search']);
+const emit = defineEmits(['edit', 'delete', 'billings', 'search']);
 
 // Estado do componente
 const searchQuery = ref('');
@@ -405,7 +405,7 @@ const editItem = (item) => {
 };
 
 const viewCustomerDetails = (item) => {
-    emit('preview', item);
+    emit('billings', item);
 };
 
 const searchItems = (item) => {

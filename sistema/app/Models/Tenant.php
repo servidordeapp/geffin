@@ -12,17 +12,22 @@ class Tenant extends Model
     use HasUuids, SoftDeletes;
 
     protected $fillable = [
+        'plan_id',
         'name',
         'slug',
         'email',
-        'plan_id',
         'phone',
-        'status',
         'document',
+        'status',
     ];
 
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function clients(): HasMany
+    {
+        return $this->hasMany(Client::class);
     }
 }

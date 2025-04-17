@@ -3,10 +3,11 @@
 namespace {{ namespace }};
 
 {{ factoryImport }}
-use App\Models\Traits\HasTenant;
+use App\Traits\HasTenant;
 
 class {{ class }} extends BaseModel
 {
+    use HasTenant;
     {{ factory }}
 
     protected $fillable = [

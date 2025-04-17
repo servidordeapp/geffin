@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('plan_id');
-            $table->string('billable_id', 36)->nullable();
             $table->string('name', 100);
             $table->string('slug', 150)->unique()->index();
             $table->string('email', 150)->nullable();

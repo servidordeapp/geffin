@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
             $table->foreingUuid('tenant_id')->index()->constrained();
+            $table->string('descricao', 100);
+            $table->string('conta', 20);
+            $table->string('conta_dv', 20);
+            $table->string('agencia', 20);
+            $table->string('agencia_dv', 20);
+            $table->string('variacao_carteira', 20);
+            $table->string('convenio', 20);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('bank_accounts');
     }
 };

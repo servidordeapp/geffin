@@ -10,8 +10,12 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('clientes', function () {
-    return Inertia::render('Clientes');
-})->middleware(['auth', 'verified'])->name('clientes');
+    return Inertia::render('Clientes/Index');
+})->middleware(['auth', 'verified'])->name('clientes.index');
+
+Route::get('dados-bancarios', function () {
+    return Inertia::render('DadosBancarios/Index');
+})->middleware(['auth', 'verified'])->name('dados-bancarios.index');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
