@@ -9,7 +9,8 @@
                         <h2 class="card-title text-primary text-2xl font-bold">
                             {{ isEditing ? 'Atualizar Dados Bancários' : 'Cadastrar Dados Bancários' }}
                         </h2>
-                        <p class="text-base-content/70 mt-1">Preencha os campos abaixo com as informações da sua conta bancária</p>
+                        <p class="text-base-content/80 mt-1">Preencha os campos abaixo com as informações da sua conta bancária</p>
+                        <p class="text-base-content/60 mt-1">Não se preocupe, seus dados serão armazenados criptografados.</p>
                     </div>
 
                     <!-- Ícone de banco -->
