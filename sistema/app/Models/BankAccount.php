@@ -7,6 +7,7 @@ use App\Traits\HasTenant;
 class BankAccount extends BaseModel
 {
     use HasTenant;
+    protected $table = "bank_accounts";
 
     protected $fillable = [
         'descricao',
@@ -20,4 +21,20 @@ class BankAccount extends BaseModel
         'juros',
         'desconto',
     ];
+
+    public function rules()
+    {
+        return [
+            'descricao' => 'required',
+            'conta' => 'required',
+            'conta_dv' => 'required',
+            'agencia' => 'required',
+            'agencia_dv' => 'required',
+            'variacao_carteira' => 'required',
+            'convenio' => 'required',
+            'multa' => 'nullable',
+            'juros' => 'nullable',
+            'desconto' => 'nullable',
+        ];
+    }
 }

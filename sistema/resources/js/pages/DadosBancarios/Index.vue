@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import BankDataForm from '../../components/BankDataForm.vue';
 
@@ -21,7 +21,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 // Estado
-const isEditing = ref(true); // ou false para novo cadastro
+const isEditing = ref(false); // ou false para novo cadastro
 const bankData = ref({
     // Dados pré-existentes para edição
     descricao: 'Conta Principal',
@@ -40,6 +40,15 @@ const bankData = ref({
 const handleSubmit = (data: any) => {
     console.log('Dados submetidos:', data);
     // Integração com API
+
+    if (isEditing.value) {
+        // Atualiza o cadastro existente
+        router.put(route('dados-bancarios.update', data.id), data);
+    } else {
+        // Cria um novo cadastro
+        router.post(route('dados-bancarios.store'), data);
+    }
+
 };
 
 const handleCancel = () => {
