@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email', 150)->nullable();
             $table->string('phone', 16)->nullable();
             $table->string('document', 17)->nullable();
-            $table->tinyInteger('status');
+            $table->string('status', 20);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
-            $table->foreingUuid('tenant_id')->index()->constrained();
+            $table->foreignUuid('tenant_id')->index()->constrained();
             $table->string('descricao', 100);
             $table->string('conta', 20);
-            $table->string('conta_dv', 20);
+            $table->string('conta_dv', 2);
             $table->string('agencia', 20);
-            $table->string('agencia_dv', 20);
-            $table->string('variacao_carteira', 20);
+            $table->string('agencia_dv', 2);
+            $table->string('variacao_carteira', 5);
             $table->string('convenio', 20);
+            $table->string('multa', 20);
+            $table->string('juros', 20);
+            $table->string('desconto', 20);
             $table->timestamps();
             $table->softDeletes();
         });
