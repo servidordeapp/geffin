@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Change Directory
+        run: cd sistema
+        
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -25,9 +28,6 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Change Directory
-        run: cd sistema
-        
       - name: Install Node Dependencies
         run: npm ci
 
