@@ -28,13 +28,13 @@ jobs:
           node-version: '22'
 
       - name: Install Node Dependencies
-        run: npm install
+        run: cd sistema && npm install
 
       - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+        run: cd sistema && composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
       - name: Build Assets
-        run: npm run build
+        run: cd sistema && npm run build
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
