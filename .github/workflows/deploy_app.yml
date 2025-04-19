@@ -34,7 +34,7 @@ jobs:
         run: cd sistema && composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
       - name: Build Assets
-        run: cd sistema && npm run build
+        run: cd sistema && npm run build:ssr
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
