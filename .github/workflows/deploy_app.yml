@@ -43,4 +43,4 @@ jobs:
           username: ${{ vars.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: app/projetos/geffin/
-          output-dir: ./sistema/
+          server-dir: ./sistema/
