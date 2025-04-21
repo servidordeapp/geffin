@@ -14,6 +14,7 @@ class UpdateBankAccountController extends Controller
     public function __invoke(UpdateBankAccountRequest $request, BankAccount $bankAccount)
     {
         $bankAccount->update($request->validated());
-        return redirect()->route("dados-bancarios.index");
+
+        return redirect()->route('dados-bancarios.index');
     }
 }

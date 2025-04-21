@@ -14,6 +14,7 @@ class CreateBankAccountController extends Controller
     public function __invoke(CreateBankAccountRequest $request)
     {
         $bankAccount = BankAccount::create($request->validated());
-        return redirect()->route("dados-bancarios.index");
+
+        return redirect()->route('dados-bancarios.index');
     }
 }

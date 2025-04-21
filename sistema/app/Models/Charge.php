@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
-use App\Traits\HasTenant;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Charge extends BaseModel
 {
-    use HasTenant;
-
     protected $fillable = [
         'client_id',
+        'description',
         'value',
         'due_date',
         'status',
         'gateway',
     ];
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function intallments(): HasMany
+    {
+        return $this->hasMany(Installment::class);
+    }
 }

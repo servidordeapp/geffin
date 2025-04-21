@@ -50,6 +50,9 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'logos' => [
+                'app' => url('/assets/img/logo/icon/android-chrome-192x192.png'),
+            ],
         ];
     }
 }

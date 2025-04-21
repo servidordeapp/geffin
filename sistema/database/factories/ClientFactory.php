@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientFactory extends Factory
 {
-
     protected $model = Client::class;
 
     /**
@@ -24,6 +23,7 @@ class ClientFactory extends Factory
             'tenant_id' => session()->get('tenant_id'),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
+            'document_type' => fake()->randomElement(['CNPJ', 'CPF']),
             'document' => fake()->unique()->cpf(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->unique()->phoneNumber(),

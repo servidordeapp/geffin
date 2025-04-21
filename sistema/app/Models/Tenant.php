@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tenant extends Model
 {
-    use HasUuids, SoftDeletes, HasFactory;
+    use HasUuids, HasFactory;
 
-    public const STATUS_ACTIVE = "active";
+    public const STATUS_ACTIVE = 'active';
 
-    public const STATUS_INACTIVE = "inactive";
+    public const STATUS_INACTIVE = 'inactive';
 
     protected $fillable = [
         'plan_id',
@@ -34,5 +34,10 @@ class Tenant extends Model
     public function clients(): HasMany
     {
         return $this->hasMany(Client::class);
+    }
+
+    public function addresses(): MorphToMany
+    {
+        return $this->morphToMany(Address::class, 'addressable');
     }
 }

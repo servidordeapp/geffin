@@ -28,12 +28,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-if="filteredItems.length === 0">
+                    <tr v-if="items.data.length === 0">
                         <td :colspan="showActions ? headers.length + 1 : headers.length" class="py-4 text-center">
                             {{ emptyMessage }}
                         </td>
                     </tr>
-                    <tr v-for="item in filteredItems" :key="getItemKey(item)" class="hover">
+                    <tr v-for="item in items.data" :key="getItemKey(item)" class="hover">
                         <td v-for="header in headers" :key="`${getItemKey(item)}-${header.key}`">
                             <!-- Renderização condicional baseada no tipo de coluna -->
                             <template v-if="header.type === 'badge'">
@@ -86,7 +86,7 @@
                                         </svg>
                                         {{ editButtonLabel }}
                                     </button>
-                                    <button v-if="showDetailsButton" @click="viewCustomerDetails(item)" class="btn btn-sm btn-primary">
+                                    <button v-if="showBillingsButton" @click="viewCustomerCharges(item)" class="btn btn-sm btn-primary">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             class="mr-1 h-4 w-4"
@@ -134,14 +134,7 @@
             </table>
         </div>
 
-        <!-- Paginação -->
-        <div v-if="showPagination" class="mt-4 flex justify-center">
-            <div class="btn-group">
-                <button class="btn" :class="{ 'btn-disabled': currentPage === 1 }" @click="currentPage--">«</button>
-                <button class="btn">{{ paginationLabel.replace('{current}', currentPage).replace('{total}', totalPages) }}</button>
-                <button class="btn" :class="{ 'btn-disabled': currentPage === totalPages }" @click="currentPage++">»</button>
-            </div>
-        </div>
+        <Pagination :pagination="items" route-name="clients.index" :params="{ search: searchQuery, page: currentPage }" />
 
         <!-- Modal de confirmação de exclusão -->
         <div v-if="showDeleteConfirmation" class="modal modal-open">
@@ -159,14 +152,16 @@
 
 <!-- eslint-disable-next-line vue/block-lang -->
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import Pagination from './Pagination.vue';
 
 // Props para o componente genérico
 const props = defineProps({
     // Dados principais
     items: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => ({}),
     },
     headers: {
         type: Array,
@@ -189,6 +184,10 @@ const props = defineProps({
     },
 
     // Configurações de busca
+    search: {
+        type: String,
+        default: '',
+    },
     showSearch: {
         type: Boolean,
         default: true,
@@ -209,7 +208,7 @@ const props = defineProps({
     },
     itemsPerPage: {
         type: Number,
-        default: 10,
+        default: 15,
     },
     paginationLabel: {
         type: String,
@@ -229,7 +228,7 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    showDetailsButton: {
+    showBillingsButton: {
         type: Boolean,
         default: true,
     },
@@ -274,10 +273,10 @@ const props = defineProps({
 });
 
 // Emits para eventos personalizados
-const emit = defineEmits(['edit', 'delete', 'billings', 'search']);
+const emit = defineEmits(['edit', 'delete', 'charges', 'search']);
 
 // Estado do componente
-const searchQuery = ref('');
+const searchQuery = ref(props.search);
 const currentPage = ref(1);
 const showDeleteConfirmation = ref(false);
 const itemToDelete = ref(null);
@@ -286,62 +285,6 @@ const itemToDelete = ref(null);
 const getItemKey = (item) => {
     return item[props.itemKey];
 };
-
-// Filtragem de itens baseada na busca
-const filteredItems = computed(() => {
-    const query = searchQuery.value.toLowerCase();
-
-    // Se não houver texto de busca, não filtra
-    let filtered = props.items;
-
-    if (query) {
-        // Campos de busca (usa props.searchFields ou todos os headers)
-        const searchFields = props.searchFields || props.headers.map((h) => h.key);
-
-        // Filtra os itens com base no texto de busca em qualquer campo
-        filtered = props.items.filter((item) => {
-            return searchFields.some((field) => {
-                const value = item[field];
-                if (value === null || value === undefined) return false;
-                return String(value).toLowerCase().includes(query);
-            });
-        });
-    }
-
-    // Aplica paginação se necessário
-    if (props.showPagination) {
-        const startIndex = (currentPage.value - 1) * props.itemsPerPage;
-        const endIndex = startIndex + props.itemsPerPage;
-        return filtered.slice(startIndex, endIndex);
-    }
-
-    return filtered;
-});
-
-// Total de páginas para paginação
-const totalPages = computed(() => {
-    // Obter o total de itens filtrados (sem a paginação)
-    const query = searchQuery.value.toLowerCase();
-
-    // Se não houver texto de busca, conta todos os itens
-    if (!query) {
-        return Math.ceil(props.items.length / props.itemsPerPage) || 1;
-    }
-
-    // Campos de busca (usa props.searchFields ou todos os headers)
-    const searchFields = props.searchFields || props.headers.map((h) => h.key);
-
-    // Conta itens que correspondem à busca
-    const count = props.items.filter((item) => {
-        return searchFields.some((field) => {
-            const value = item[field];
-            if (value === null || value === undefined) return false;
-            return String(value).toLowerCase().includes(query);
-        });
-    }).length;
-
-    return Math.ceil(count / props.itemsPerPage) || 1;
-});
 
 // Retorna a classe apropriada para badges
 const getBadgeClass = (value, variants = {}) => {
@@ -404,12 +347,23 @@ const editItem = (item) => {
     emit('edit', item);
 };
 
-const viewCustomerDetails = (item) => {
-    emit('billings', item);
+const viewCustomerCharges = (item) => {
+    emit('charges', item);
 };
 
 const searchItems = (item) => {
-    emit('search', item);
+    console.log('Buscando item:', searchQuery.value);
+    // emit('search', item);
+    // searchInput.value = event.target.value;
+    router.get(
+        route('clients.index'),
+        { search: item },
+        {
+            preserveScroll: true,
+            preserveState: false,
+            replace: true,
+        },
+    );
 };
 
 const showDeleteModal = (item) => {
@@ -424,7 +378,8 @@ const confirmDelete = () => {
 };
 
 // Watch para resetar a página quando a busca muda
-watch(searchQuery, () => {
-    currentPage.value = 1;
-});
+// watch(searchQuery, () => {
+//     console.log('Busca alterada:', searchQuery.value);
+//     currentPage.value = 1;
+// });
 </script>

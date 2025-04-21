@@ -7,6 +7,12 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
 
+import Toast, { PluginOptions } from "vue-toastification";
+import "vue-toastification/dist/index.css";
+const options: PluginOptions = {
+    // You can set your default options here
+};
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -28,6 +34,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(Toast, options)
             .use(ZiggyVue)
             .mount(el);
     },

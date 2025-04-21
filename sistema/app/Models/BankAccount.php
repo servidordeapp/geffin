@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\HasTenant;
-
 class BankAccount extends BaseModel
 {
-    use HasTenant;
-    protected $table = "bank_accounts";
+    protected $table = 'bank_accounts';
 
     protected $fillable = [
         'descricao',

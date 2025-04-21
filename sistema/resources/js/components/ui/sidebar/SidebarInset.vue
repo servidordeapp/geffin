@@ -22,7 +22,7 @@ const props = defineProps<{
       props.class,
     )"
   >
-    <div class="navbar bg-base-100 shadow-sm">
+    <div class="navbar bg-info text-info-content shadow-sm">
         <div class="flex-none">
             <button class="btn btn-square btn-ghost" @click="toggleSidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
@@ -31,10 +31,10 @@ const props = defineProps<{
             </button>
         </div>
         <div class="flex-1">
-            Nome do Projeto
+            {{ 'Geffin - Emissão e gestão de cobranças'.toUpperCase() }}
         </div>
     </div>
-    <div class="text-gray-700">
+    <div class="text-base-content">
         <slot />
     </div>
   </main>

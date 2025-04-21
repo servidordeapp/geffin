@@ -22,7 +22,8 @@ class CreateBankAccountRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = (new BankAccount())->rules();
+        $rules = (new BankAccount)->rules();
+
         return $rules;
     }
 }

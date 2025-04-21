@@ -2,34 +2,58 @@
 
 use App\Http\Controllers\BankAccount\CreateBankAccountController;
 use App\Http\Controllers\BankAccount\UpdateBankAccountController;
+use App\Http\Controllers\Client\CreateClientController;
+use App\Http\Controllers\Client\IndexClientController;
+use App\Http\Controllers\Client\UpdateClientController;
 use App\Models\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', fn() => redirect()->route('dashboard'))->name('home');
 
-Route::get('dashboard', function () {
+Route::middleware(['auth', 'verified'])->get('dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
-Route::get('clientes', function () {
-    return Inertia::render('Clientes/Index', [
-        'clientsList' => Client::get(),
-    ]);
-})->middleware(['auth', 'verified'])->name('clientes.index');
+Route::middleware(['auth', 'verified'])->prefix('clientes')->name('clients.')->group(function () {
+    Route::get('/', IndexClientController::class)->name('index');
 
-Route::prefix('dados-bancarios')->name('dados-bancarios.')->group(function () {
+    Route::get('/create', function (Client $client) {
+        return Inertia::render('Clientes/FormClient', [
+            // 'client' => Client::with('charges')->find($client->id),
+        ]);
+    })->name('create');
+
+    Route::get('{client}/edit', function (Client $client) {
+        return Inertia::render('Clientes/FormClient', [
+            'initialData' => Client::find($client->id),
+            'isEditing' => true,
+        ]);
+    })->name('edit');
+
+    Route::post('/create', CreateClientController::class)->name('store');
+    Route::put('/update', UpdateClientController::class)->name('update');
+
+    Route::get('{client}/charges', function (Client $client) {
+        return Inertia::render('Clientes/Charges', [
+            'client' => Client::with('charges')->find($client->id),
+        ]);
+    })->name('charges');
+
+});
+
+Route::middleware(['auth', 'verified'])->prefix('dados-bancarios')->name('dados-bancarios.')->group(function () {
     Route::get('/', function () {
         return Inertia::render('DadosBancarios/Index');
-    })->middleware(['auth', 'verified'])->name('index');
+    })->name('index');
 
     Route::post('/', CreateBankAccountController::class)
-        ->middleware(['auth', 'verified'])
         ->name('store');
 
     Route::put('/{bankAccount}', UpdateBankAccountController::class)
-        ->middleware(['auth', 'verified'])
         ->name('update');
+
 });
 
 require __DIR__ . '/settings.php';

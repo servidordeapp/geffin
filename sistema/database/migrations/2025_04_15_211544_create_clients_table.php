@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignUuid('tenant_id')->index()->constrained();
             $table->string('first_name', 50);
             $table->string('last_name', 100);
+            $table->string('document_type', 50);
             $table->string('document', 100)->unique();
             $table->string('email', 100)->unique();
-            $table->string('phone', 30)->unique();
+            $table->string('phone', 30);
             $table->timestamps();
             $table->softDeletes();
         });

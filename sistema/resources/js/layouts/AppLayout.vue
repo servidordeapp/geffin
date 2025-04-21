@@ -16,7 +16,7 @@ withDefaults(defineProps<Props>(), {
         <div class="bg-base-200 min-h-screen px-4 pt-8">
             <slot />
             <!-- Card de Ajuda -->
-            <div class="card bg-base-100 mt-6 shadow-lg">
+            <div class="bg-base-100 rounded-xl mt-6 shadow-lg">
                 <div class="card-body">
                     <h3 class="card-title text-lg">Precisa de ajuda?</h3>
                     <div class="mt-2 flex flex-col gap-4 sm:flex-row">

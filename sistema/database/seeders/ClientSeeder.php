@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Tenant;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ClientSeeder extends Seeder

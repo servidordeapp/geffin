@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class TenantFactory extends Factory
 {
     protected $model = Tenant::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,8 +20,8 @@ class TenantFactory extends Factory
     public function definition(): array
     {
         return [
-            "id" => fake()->uuid(),
-            "plan_id" => fake()->numberBetween(1,10),
+            'id' => fake()->uuid(),
+            'plan_id' => fake()->numberBetween(1, 10),
             'name' => fake()->name(),
             'slug' => fake()->unique()->slug(),
             'email' => fake()->unique()->safeEmail(),

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="aurora">
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="frpie"> --}}
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="literallyvoid"> --}}
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="aurora"> --}}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dancinginferno">
 
 <head>
     <meta charset="utf-8">

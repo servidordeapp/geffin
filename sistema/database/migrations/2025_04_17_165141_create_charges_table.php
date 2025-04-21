@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -14,6 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignUuid('tenant_id')->index()->constrained();
             $table->foreignId('client_id')->constrained();
+            $table->string('description', 20);
             $table->decimal('value', 8, 2);
             $table->date('due_date');
             $table->string('status', 20);

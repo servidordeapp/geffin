@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Charge;
 use App\Models\Client;
+use App\Models\Installment;
 use App\Models\Tenant;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TenantSeeder extends Seeder
@@ -15,9 +16,15 @@ class TenantSeeder extends Seeder
     public function run(): void
     {
         Tenant::factory()
-            ->count(200)
+            ->count(rand(1, 100))
             ->has(
-                Client::factory()->count(1000)
+                Client::factory()
+                    ->has(
+                        Charge::factory()
+                            ->state(fn (array $attributes, Client $client) => ['tenant_id' => $client->tenant_id])
+
+                            ->count(rand(0, 30))
+                    )->count(rand(0, 300))
             )->create();
     }
 }
