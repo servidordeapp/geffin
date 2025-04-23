@@ -351,16 +351,22 @@ const viewCustomerCharges = (item) => {
     emit('charges', item);
 };
 
-const searchItems = () => {
-    router.visit(
-        route('clients.index'),
-        { search: searchQuery.value },
-        {
-            preserveState: false,
-            preserveScroll: true,
-            replace: true,
-        },
-    );
+const searchItems = (event) => {
+    emit('search', event);
+    // let query = '';
+
+    // if (searchQuery.value) {
+    //     query += "search=" + searchQuery.value;
+    // }
+
+    // router.visit(
+    //     route('clients.index')+'?'.concat(query),
+    //     {
+    //         preserveState: false,
+    //         preserveScroll: true,
+    //         replace: true,
+    //     },
+    // );
 };
 
 const showDeleteModal = (item) => {

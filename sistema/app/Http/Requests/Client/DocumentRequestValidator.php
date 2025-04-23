@@ -15,7 +15,7 @@ class DocumentRequestValidator
                 new Cpf($document);
             } catch (\Throwable $th) {
                 throw ValidationException::withMessages([
-                    $th->getMessage()
+                    $th->getMessage(),
                 ]);
             }
         }
@@ -25,7 +25,7 @@ class DocumentRequestValidator
                 new Cnpj($document);
             } catch (\Throwable $th) {
                 throw ValidationException::withMessages([
-                    $th->getMessage()
+                    $th->getMessage(),
                 ]);
             }
         }

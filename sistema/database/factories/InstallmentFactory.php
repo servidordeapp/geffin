@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Charge;
 use App\Models\Installment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,14 +21,16 @@ class InstallmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'number',
-            'value',
-            'paid_value',
-            'due_date',
-            'paid_date',
-            'status',
-            'download_link',
-            'linha_digitavel',
+            'tenant_id' => 1,
+            'charge_id' => Charge::factory(),
+            'number' => 1,
+            'value' => fake()->randomFloat(2, 10, 1000),
+            'paid_value' => null,
+            'due_date' => fake()->dateTimeBetween('-1 year', '+1 year'),
+            'paid_date' => fake()->randomElement([null, fake()->dateTimeBetween('-1 year', '+1 year')]),
+            'status' => fake()->randomElement(['pending', 'paid', 'overdue']),
+            'download_link' => fake()->url(),
+            'linha_digitavel' => fake()->randomNumber(),
         ];
     }
 }

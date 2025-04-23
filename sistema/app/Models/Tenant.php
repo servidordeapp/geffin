@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tenant extends Model
 {
-    use HasUuids, HasFactory;
+    use HasFactory, HasUuids;
 
     public const STATUS_ACTIVE = 'active';
 

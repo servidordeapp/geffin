@@ -24,8 +24,8 @@ class UpdateClientRequest extends FormRequest
     {
         $rules = (new Client)->rules();
 
-        $rules['document'][] = 'unique:clients,document,' . $this->id;
-        $rules['email'][] = 'unique:clients,email,' . $this->id;
+        $rules['document'][] = 'unique:clients,document,'.$this->id;
+        $rules['email'][] = 'unique:clients,email,'.$this->id;
 
         return $rules;
     }

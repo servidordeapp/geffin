@@ -108,7 +108,7 @@
                         <div class="flex flex-col justify-between md:flex-row">
                             <div class="flex-1">
                                 <h2 class="card-title flex items-center">
-                                    {{ charge.descricao }}
+                                    {{ charge.description }}
                                     <div :class="`badge ${getStatusBadgeClass(charge.status)} ml-2`">{{ charge.status }}</div>
                                 </h2>
                                 <div class="mt-2 space-y-1">
@@ -164,7 +164,6 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <!-- Usamos drawer global ao invés de drawer aninhado -->
                                                 <button
                                                     @click="openInstallmentHistory(installment.id, charge.client_id, installment.history || [])"
                                                     class="btn btn-primary btn-sm"
@@ -198,15 +197,7 @@
                                             </svg>
                                         </button>
                                     </div>
-
-                                    <!-- Componente de histórico
-            <single-installment-history
-                v-if="selectedInstallment"
-                :parcela-id="selectedInstallment.id"
-                :cliente-id="selectedInstallment.clientId"
-                :historico-data="selectedInstallment.history"
-            /> -->
-                                    <PaymentHistory></PaymentHistory>
+                                    <PaymentHistory :parcelaId="selectedInstallment" :clienteIdclient="selectedClient.id"></PaymentHistory>
                                 </div>
                             </div>
                         </div>
@@ -230,25 +221,39 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import FormCharge from '../../components/FormCharge.vue';
 import PaymentHistory from '../../components/PaymentHistory.vue';
 
+const props = defineProps({
+    client: Object,
+});
+
+// Cliente selecionado (normalmente viria de um estado global ou params)
+const selectedClient = ref({
+    id: props.client?.id,
+    name: props.client?.first_name + ' ' + props.client?.last_name,
+});
+
 const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: route('dashboard'),
+    },
     {
         title: 'Clientes',
         href: route('clients.index'),
     },
     {
         title: 'Cobranças',
-        // href: route('clients.charges', null),
+        href: route('clients.charges', selectedClient.value.id),
     },
 ];
 // Estado
 const isDrawerOpen = ref(false);
 const selectedInstallment = ref(null);
-const charges = ref([]);
-const loading = ref(true);
+const charges = ref(props.client?.charges || []);
+const loading = ref(false);
 const error = ref(false);
 const expandedCharges = ref([]);
 const statusFilter = ref('');
@@ -265,128 +270,30 @@ const openInstallmentHistory = (installmentId, clientId, history) => {
     isDrawerOpen.value = true;
 };
 
-// Cliente selecionado (normalmente viria de um estado global ou params)
-const selectedClient = ref({
-    id: 1,
-    name: 'Empresa XYZ Ltda.',
-});
-
-// Dados mockados para demonstração
-onMounted(async () => {
-    loading.value = true;
-    error.value = false;
-
-    try {
-        // Simula uma chamada de API
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        charges.value = [
-            {
-                id: 1,
-                descricao: 'Serviço de Consultoria - Abril',
-                client_id: 1,
-                value: 1500.0,
-                due_date: '2025-04-25',
-                status: 'pendente',
-                contrato: 'CONT-2025-0042',
-                installments: [
-                    { value: 500.0, due_date: '2025-04-25', status: 'pendente' },
-                    { value: 500.0, due_date: '2025-05-25', status: 'pendente' },
-                    { value: 500.0, due_date: '2025-06-25', status: 'pendente' },
-                ],
-            },
-            {
-                id: 2,
-                descricao: 'Licença de Software - 1º Trimestre',
-                client_id: 1,
-                value: 3600.0,
-                due_date: '2025-03-15',
-                status: 'pago',
-                contrato: 'CONT-2025-0036',
-                installments: [
-                    { value: 1200.0, due_date: '2025-01-15', status: 'pago' },
-                    { value: 1200.0, due_date: '2025-02-15', status: 'pago' },
-                    { value: 1200.0, due_date: '2025-03-15', status: 'pago' },
-                ],
-            },
-            {
-                id: 3,
-                descricao: 'Suporte Técnico - Março',
-                client_id: 1,
-                value: 800.0,
-                due_date: '2025-03-10',
-                status: 'atrasado',
-                contrato: null,
-                installments: [{ value: 800.0, due_date: '2025-03-10', status: 'atrasado' }],
-            },
-            {
-                id: 4,
-                descricao: 'Serviço de Manutenção',
-                client_id: 1,
-                value: 2500.0,
-                due_date: '2025-02-28',
-                status: 'pago',
-                contrato: 'CONT-2025-0022',
-                installments: [
-                    { value: 1250.0, due_date: '2025-01-28', status: 'pago' },
-                    { value: 1250.0, due_date: '2025-02-28', status: 'pago' },
-                ],
-            },
-            {
-                id: 5,
-                descricao: 'Implementação de Sistema',
-                client_id: 1,
-                value: 8000.0,
-                due_date: '2025-06-30',
-                status: 'pendente',
-                contrato: 'CONT-2025-0045',
-                installments: [
-                    { value: 2000.0, due_date: '2025-03-30', status: 'pago' },
-                    { value: 2000.0, due_date: '2025-04-30', status: 'pendente' },
-                    { value: 2000.0, due_date: '2025-05-30', status: 'pendente' },
-                    { value: 2000.0, due_date: '2025-06-30', status: 'pendente' },
-                ],
-            },
-            {
-                id: 6,
-                descricao: 'Treinamento de Equipe',
-                client_id: 1,
-                value: 1200.0,
-                due_date: '2025-01-20',
-                status: 'cancelado',
-                contrato: null,
-                installments: [{ value: 1200.0, due_date: '2025-01-20', status: 'cancelado' }],
-            },
-        ];
-    } catch (e) {
-        error.value = true;
-    } finally {
-        loading.value = false;
-    }
-});
-
 // Filtrar cobranças
 const filteredCharges = computed(() => {
-    let filtered = charges.value;
+    console.log('Charges...', props.client);
+    let filtered = props.client?.charges;
+    // let filtered = charges.value;
 
     // Filtrar por status
     if (statusFilter.value) {
-        filtered = filtered.filter((charge) => charge.status === statusFilter.value);
+        filtered = filtered.filter((charge: any) => charge.status === statusFilter.value);
     }
 
     // Filtrar por texto de busca
     if (searchText.value) {
         const search = searchText.value.toLowerCase();
         filtered = filtered.filter(
-            (charge) => charge.descricao.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
+            (charge: any) => charge.description.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
         );
     }
 
     // Paginação
-    const startIndex = (currentPage.value - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    // const startIndex = (currentPage.value - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
 
-    return filtered.slice(startIndex, endIndex);
+    return filtered; //.slice(startIndex, endIndex);
 });
 
 // Total de páginas
@@ -400,7 +307,7 @@ const totalPages = computed(() => {
     if (searchText.value) {
         const search = searchText.value.toLowerCase();
         filtered = filtered.filter(
-            (charge) => charge.descricao.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
+            (charge) => charge.description.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
         );
     }
 

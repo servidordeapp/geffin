@@ -2,15 +2,15 @@
 
 use App\Http\Controllers\BankAccount\CreateBankAccountController;
 use App\Http\Controllers\BankAccount\UpdateBankAccountController;
+use App\Http\Controllers\Client\Charges\ListClientChargesController;
 use App\Http\Controllers\Client\CreateClientController;
 use App\Http\Controllers\Client\IndexClientController;
 use App\Http\Controllers\Client\UpdateClientController;
 use App\Models\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn() => redirect()->route('dashboard'))->name('home');
+Route::get('/', fn () => redirect()->route('dashboard'))->name('home');
 
 Route::middleware(['auth', 'verified'])->get('dashboard', function () {
     return Inertia::render('Dashboard');
@@ -20,13 +20,13 @@ Route::middleware(['auth', 'verified'])->prefix('clientes')->name('clients.')->g
     Route::get('/', IndexClientController::class)->name('index');
 
     Route::get('/create', function (Client $client) {
-        return Inertia::render('Clientes/FormClient', [
+        return Inertia::render('Clients/FormClient', [
             // 'client' => Client::with('charges')->find($client->id),
         ]);
     })->name('create');
 
     Route::get('{client}/edit', function (Client $client) {
-        return Inertia::render('Clientes/FormClient', [
+        return Inertia::render('Clients/FormClient', [
             'initialData' => Client::find($client->id),
             'isEditing' => true,
         ]);
@@ -35,11 +35,7 @@ Route::middleware(['auth', 'verified'])->prefix('clientes')->name('clients.')->g
     Route::post('/create', CreateClientController::class)->name('store');
     Route::put('/update', UpdateClientController::class)->name('update');
 
-    Route::get('{client}/charges', function (Client $client) {
-        return Inertia::render('Clientes/Charges', [
-            'client' => Client::with('charges')->find($client->id),
-        ]);
-    })->name('charges');
+    Route::get('{client}/charges', ListClientChargesController::class)->name('charges');
 
 });
 
@@ -56,5 +52,5 @@ Route::middleware(['auth', 'verified'])->prefix('dados-bancarios')->name('dados-
 
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

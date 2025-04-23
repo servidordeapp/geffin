@@ -46,7 +46,7 @@ const props = defineProps({
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Início',
+        title: 'Dashboard',
         href: route('dashboard'),
     },
     {
@@ -100,16 +100,18 @@ const haldleCustomerCharges = (customer: any) => {
 };
 
 const handleSearch = (event: any) => {
-    // searchInput.value = event.target.value;
-    // router.get(
-    //     route('clients.index'),
-    //     { search: searchInput.value },
-    //     {
-    //         preserveScroll: true,
-    //         preserveState: false,
-    //         replace: true,
-    //     },
-    // );
+    searchInput.value = event.target.value;
+    console.log('Buscando clientes com o termo:', searchInput.value);
+    router.get(
+        route('clients.index'),
+        { search: searchInput.value },
+        {
+            preserveScroll: true,
+            preserveState: false,
+            replace: true,
+        },
+    );
+    event.target.focus();
 };
 
 // Função para classificar visualmente as assinaturas

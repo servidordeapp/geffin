@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasTenant;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Address extends BaseModel

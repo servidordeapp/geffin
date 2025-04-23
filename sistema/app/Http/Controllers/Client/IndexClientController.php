@@ -25,10 +25,9 @@ class IndexClientController extends Controller
                     ->orWhere('email', 'like', "%$search%");
             })
             ->paginate($perPage)
-            ->withQueryString()
-            ;
+            ->withQueryString();
 
-        return Inertia::render('Clientes/Index', [
+        return Inertia::render('Clients/Index', [
             'clientsList' => $clientes,
             'search' => $search,
         ]);

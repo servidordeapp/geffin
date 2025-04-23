@@ -21,7 +21,7 @@ class Charge extends BaseModel
         return $this->belongsTo(Client::class);
     }
 
-    public function intallments(): HasMany
+    public function installments(): HasMany
     {
         return $this->hasMany(Installment::class);
     }

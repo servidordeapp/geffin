@@ -23,7 +23,7 @@ class Client extends BaseModel
             'last_name' => 'required',
             'document_type' => 'required',
             'document' => ['required'],
-            'email' => ['required','email'],
+            'email' => ['required', 'email'],
             'phone' => 'required',
         ];
     }

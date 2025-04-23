@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('charge_id')->constrained();
             $table->integer('number');
             $table->decimal('value', 8, 2);
-            $table->decimal('paid_value', 8, 2);
+            $table->decimal('paid_value', 8, 2)->nullable();
             $table->date('due_date');
             $table->date('paid_date')->nullable();
             $table->string('status', 15);
