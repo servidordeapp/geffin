@@ -351,16 +351,13 @@ const viewCustomerCharges = (item) => {
     emit('charges', item);
 };
 
-const searchItems = (item) => {
-    console.log('Buscando item:', searchQuery.value);
-    // emit('search', item);
-    // searchInput.value = event.target.value;
-    router.get(
+const searchItems = () => {
+    router.visit(
         route('clients.index'),
-        { search: item },
+        { search: searchQuery.value },
         {
-            preserveScroll: true,
             preserveState: false,
+            preserveScroll: true,
             replace: true,
         },
     );

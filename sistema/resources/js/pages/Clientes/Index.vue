@@ -100,16 +100,16 @@ const haldleCustomerCharges = (customer: any) => {
 };
 
 const handleSearch = (event: any) => {
-    searchInput.value = event.target.value;
-    router.get(
-        route('clients.index'),
-        { search: searchInput.value },
-        {
-            preserveScroll: true,
-            preserveState: false,
-            replace: true,
-        },
-    );
+    // searchInput.value = event.target.value;
+    // router.get(
+    //     route('clients.index'),
+    //     { search: searchInput.value },
+    //     {
+    //         preserveScroll: true,
+    //         preserveState: false,
+    //         replace: true,
+    //     },
+    // );
 };
 
 // Função para classificar visualmente as assinaturas
