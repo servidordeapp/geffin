@@ -217,9 +217,10 @@
     </AppLayout>
 </template>
 
-<script setup lang="ts">
+<!-- eslint-disable-next-line vue/block-lang -->
+<script setup>
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
+// import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import FormCharge from '../../components/FormCharge.vue';
@@ -235,7 +236,7 @@ const selectedClient = ref({
     name: props.client?.first_name + ' ' + props.client?.last_name,
 });
 
-const breadcrumbs: BreadcrumbItem[] = [
+const breadcrumbs = [
     {
         title: 'Dashboard',
         href: route('dashboard'),
@@ -278,14 +279,14 @@ const filteredCharges = computed(() => {
 
     // Filtrar por status
     if (statusFilter.value) {
-        filtered = filtered.filter((charge: any) => charge.status === statusFilter.value);
+        filtered = filtered.filter((charge) => charge.status === statusFilter.value);
     }
 
     // Filtrar por texto de busca
     if (searchText.value) {
         const search = searchText.value.toLowerCase();
         filtered = filtered.filter(
-            (charge: any) => charge.description.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
+            (charge) => charge.description.toLowerCase().includes(search) || (charge.contrato && charge.contrato.toLowerCase().includes(search)),
         );
     }
 

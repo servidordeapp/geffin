@@ -8,7 +8,6 @@ use App\Http\Controllers\Client\EditClientController;
 use App\Http\Controllers\Client\IndexClientController;
 use App\Http\Controllers\Client\StoreClientController;
 use App\Http\Controllers\Client\UpdateClientController;
-use App\Models\Client;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

@@ -15,6 +15,6 @@ class CreateClientController extends Controller
         return Inertia::render('Clients/FormClient', [
             'initialData' => [],
             'isEditing' => false,
-        ]);;
+        ]);
     }
 }
