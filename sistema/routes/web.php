@@ -11,7 +11,7 @@ use App\Http\Controllers\Client\UpdateClientController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn() => redirect()->route('dashboard'))->name('home');
+Route::get('/', fn () => redirect()->route('dashboard'))->name('home');
 
 Route::middleware(['auth', 'verified'])->get('dashboard', function () {
     return Inertia::render('Dashboard');
@@ -37,5 +37,5 @@ Route::middleware(['auth', 'verified'])->prefix('dados-bancarios')->name('dados-
 
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';
