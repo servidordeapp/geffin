@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('addressable_type');
             $table->string('cep', 11);
             $table->string('street', 100);
-            $table->string('number', 8);
+            $table->string('number', 8)->nullable();
             $table->string('complement', 100)->nullable();
             $table->string('neighborhood', 100);
             $table->string('city');

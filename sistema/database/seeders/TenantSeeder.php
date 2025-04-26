@@ -20,7 +20,7 @@ class TenantSeeder extends Seeder
                 Client::factory()
                     ->has(
                         Charge::factory()
-                            ->state(fn(array $attributes, Client $client) => ['tenant_id' => $client->tenant_id])
+                            ->state(fn (array $attributes, Client $client) => ['tenant_id' => $client->tenant_id])
                             ->count(rand(0, 10))
                     )->count(rand(0, 20))
             )->create();

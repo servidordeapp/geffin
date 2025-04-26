@@ -2,6 +2,25 @@
     <div class="bg-base-100 rounded-box p-4 shadow-lg">
         <h2 class="mb-4 text-xl font-bold">{{ title }}</h2>
 
+        <!-- Filtro/Pesquisa (modificado para preservar foco)
+        <div v-if="showSearch" class="form-control mb-4">
+            <label class="input">
+                <svg class="h-[1.5em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input
+                    v-model="searchQuery"
+                    @input="searchItems"
+                    type="search"
+                    :placeholder="searchPlaceholder"
+                    ref="searchInput"
+                    key="search-input"
+                />
+            </label>
+        </div> -->
         <!-- Filtro/Pesquisa (opcional) -->
         <div v-if="showSearch" class="form-control mb-4">
             <label class="input">
@@ -152,7 +171,6 @@
 
 <!-- eslint-disable-next-line vue/block-lang -->
 <script setup>
-import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Pagination from './Pagination.vue';
 
@@ -352,7 +370,19 @@ const viewCustomerCharges = (item) => {
 };
 
 const searchItems = (event) => {
+    // Store the cursor position
+    // const cursorPosition = searchInput.value?.selectionStart || 0;
+
+    // Emit the search event
     emit('search', event);
+
+    // Restore focus and cursor position after the DOM updates
+    // nextTick(() => {
+    //     if (searchInput.value) {
+    //         searchInput.value.focus();
+    //         searchInput.value.setSelectionRange(cursorPosition, cursorPosition);
+    //     }
+    // });
     // let query = '';
 
     // if (searchQuery.value) {

@@ -20,9 +20,11 @@ class IndexClientController extends Controller
 
         $clientes = Client::query()
             ->when($search, function ($query) use ($search) {
-                $query->where('first_name', 'like', "%$search%")
-                    ->orWhere('last_name', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%");
+                $query->whereAny([
+                    'first_name',
+                    'last_name',
+                    'email',
+                ], 'like', "%$search%");
             })
             ->paginate($perPage)
             ->withQueryString();

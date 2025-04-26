@@ -19,12 +19,24 @@ class Client extends BaseModel
     public function rules()
     {
         return [
+            'id' => 'nullable',
             'first_name' => 'required',
             'last_name' => 'required',
             'document_type' => 'required',
             'document' => ['required'],
             'email' => ['required', 'email'],
             'phone' => 'required',
+            'addresses' => 'array|nullable',
+            'addresses.*.id' => 'nullable',
+            'addresses.*.cep' => 'required',
+            'addresses.*.street' => 'required',
+            'addresses.*.number' => 'nullable',
+            'addresses.*.complement' => 'nullable',
+            'addresses.*.neighborhood' => 'required',
+            'addresses.*.city' => 'required',
+            'addresses.*.state' => 'required',
+            'addresses.*.type' => 'required',
+            'addresses.*.is_main' => 'required|boolean',
         ];
     }
 

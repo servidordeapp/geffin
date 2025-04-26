@@ -118,6 +118,18 @@
                             <button type="button" class="btn btn-sm btn-error" @click="removeAddress(index)">Remover</button>
                         </div>
 
+                        <div class="grid grid-cols-1">
+                            <div class="form-control">
+                                <input
+                                    type="hidden"
+                                    v-model="address.id"
+                                    class="input input-bordered w-full"
+                                    placeholder="Digite o endereço"
+                                    required
+                                />
+                            </div>
+                        </div>
+
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div class="form-control">
                                 <label class="label">
@@ -324,6 +336,7 @@ const clientData = reactive({
     phone: '',
     addresses: [
         {
+            id: '',
             cep: '',
             street: '',
             number: '',
@@ -352,6 +365,7 @@ if (props.initialData && props.isEditing) {
 // Adicionar novo endereço
 function addNewAddress() {
     clientData.addresses.push({
+        id: '',
         cep: '',
         street: '',
         number: '',
@@ -592,6 +606,7 @@ function resetForm() {
         Object.assign(clientData, props.initialData);
     } else {
         // Limpar dados
+        clientData.id = '';
         clientData.first_name = '';
         clientData.last_name = '';
         clientData.document_type = '';

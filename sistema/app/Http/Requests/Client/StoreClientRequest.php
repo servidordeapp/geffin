@@ -5,7 +5,7 @@ namespace App\Http\Requests\Client;
 use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateClientRequest extends FormRequest
+class StoreClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
