@@ -1,13 +1,11 @@
 <template>
-    <div class="w-full p-4 lg:p-6">
+    <div class="w-full lg:p-6">
         <div class="flex flex-col gap-4 lg:gap-6">
             <!-- Cabeçalho redesenhado -->
-            <div class="bg-base-100 rounded-box shadow-sm p-4 lg:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_auto] gap-4 items-center">
+            <div class="bg-base-100 rounded-box shadow-sm lg:p-6">
+                <div class="grid grid-cols-1 items-center gap-4 md:grid-cols-2 lg:grid-cols-[1fr_auto]">
                     <div class="space-y-1">
-                        <h1 class="text-2xl font-bold text-base-content">
-                            Detalhes da Parcela
-                        </h1>
+                        <h1 class="text-base-content text-2xl font-bold">Detalhes da Parcela</h1>
                         <div class="flex flex-wrap items-center gap-2 text-sm">
                             <div class="flex items-center gap-2">
                                 <span class="font-medium">Valor:</span>
@@ -23,12 +21,9 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-2 min-w-[200px]">
+                    <div class="flex min-w-[200px] flex-col gap-2">
                         <label class="text-sm font-medium opacity-75">Filtrar eventos:</label>
-                        <select
-                            v-model="filtroEvento"
-                            class="select select-bordered select-sm w-full focus:ring-2"
-                        >
+                        <select v-model="filtroEvento" class="select select-bordered select-sm w-full focus:ring-2">
                             <option value="">Todos os eventos</option>
                             <option value="created">Criação</option>
                             <option value="updated">Atualização</option>
@@ -39,49 +34,52 @@
                 </div>
             </div>
 
-            <!-- Timeline redesenhada -->
-            <div class="bg-base-100 rounded-box shadow-sm p-4 lg:p-6">
+            <div class="bg-base-100 rounded-box shadow-sm lg:p-6">
                 <div v-if="historico.length === 0" class="alert alert-info shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                     </svg>
                     <span>Nenhum histórico encontrado para esta parcela.</span>
                 </div>
 
-                <ul v-else class="timeline timeline-vertical lg:timeline-horizontal">
+                <ul v-else class="flex flex-col gap-8">
                     <li
                         v-for="(item, index) in historicoFiltrado"
                         :key="item.id"
-                        class="timeline-item mb-8 lg:mb-0 lg:flex-1"
+                        class="animate-fade-in-up flex flex-col gap-4 sm:flex-row sm:items-center"
                     >
-                        <!-- Linha do tempo -->
-                        <div class="timeline-start mr-4 lg:mr-0 lg:mb-4">
+                        <!-- Data e hora -->
+                        <div class="flex flex-col items-center sm:w-32 sm:items-end">
                             <div class="text-xs font-semibold opacity-75">{{ formatDate(item.created_at) }}</div>
                             <div class="text-[0.7rem] opacity-50">{{ formatTime(item.created_at) }}</div>
                         </div>
 
-                        <div class="timeline-middle">
-                            <div
-                                class="w-6 h-6 rounded-full flex items-center justify-center"
-                                :class="getEventBadgeClass(item.event)"
-                            >
-                                <span class="text-white text-xs">
+                        <!-- Linha vertical + Badge -->
+                        <div class="flex flex-col items-center">
+                            <div class="flex h-6 w-6 items-center justify-center rounded-full" :class="getEventBadgeClass(item.event)">
+                                <span class="text-xs text-white">
                                     {{ getEventTitle(item.event)[0] }}
                                 </span>
                             </div>
+                            <div class="bg-base-300 my-2 hidden h-full w-px sm:block"></div>
                         </div>
 
                         <!-- Card do evento -->
-                        <div class="timeline-end ml-4 lg:ml-0 lg:mt-4">
-                            <div class="card card-compact bg-base-100 shadow-md hover:shadow-lg transition-shadow">
+                        <div class="flex-1">
+                            <div class="card card-compact bg-base-100 shadow-md transition-shadow hover:shadow-lg">
                                 <div class="card-body p-4">
-                                    <div class="flex justify-between items-start">
-                                        <h3 class="card-title text-sm mb-2">
+                                    <div class="flex items-start justify-between">
+                                        <h3 class="card-title mb-2 text-sm">
                                             {{ getEventTitle(item.event) }}
                                         </h3>
                                         <div class="tooltip" :data-tip="getUsuarioInfo(item)">
                                             <div class="avatar placeholder">
-                                                <div class="bg-neutral text-neutral-content rounded-full w-8 h-8">
+                                                <div class="bg-neutral text-neutral-content h-8 w-8 rounded-full">
                                                     <span class="text-xs">{{ getUsuarioIniciais(item) }}</span>
                                                 </div>
                                             </div>
@@ -90,43 +88,32 @@
 
                                     <!-- Detalhes das alterações -->
                                     <div v-if="hasChanges(item)" class="space-y-3">
-                                        <button
-                                            @click="toggleDetalhes(index)"
-                                            class="btn btn-xs btn-ghost w-full justify-between px-2"
-                                        >
+                                        <button @click="toggleDetalhes(index)" class="btn btn-xs btn-ghost w-full justify-between px-2">
                                             <span class="text-xs">
                                                 {{ detalhesAbertos.includes(index) ? 'Ocultar detalhes' : 'Ver alterações' }}
                                             </span>
                                             <svg
-                                                class="w-3 h-3 transform transition-transform duration-200"
+                                                class="h-3 w-3 transform transition-transform duration-200"
                                                 :class="detalhesAbertos.includes(index) ? 'rotate-180' : ''"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                                <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
                                             </svg>
                                         </button>
 
                                         <div v-if="detalhesAbertos.includes(index)" class="space-y-3">
-                                            <div
-                                                v-for="(alteracao, campo) in getChanges(item)"
-                                                :key="campo"
-                                                class="bg-base-200 rounded-box p-3"
-                                            >
-                                                <div class="text-xs font-medium opacity-75 mb-1">
+                                            <div v-for="(alteracao, campo) in getChanges(item)" :key="campo" class="bg-base-200 rounded-box p-3">
+                                                <div class="mb-1 text-xs font-medium opacity-75">
                                                     {{ formatFieldName(campo) }}
                                                 </div>
                                                 <div class="grid grid-cols-2 gap-2 text-sm">
                                                     <div class="text-error flex flex-col">
                                                         <span class="text-xs opacity-75">Antes:</span>
-                                                        <span class="truncate">
-                                                            {{ formatFieldValue(campo, alteracao.old) || '-' }}
-                                                        </span>
+                                                        <span class="truncate">{{ formatFieldValue(campo, alteracao.old) || '-' }}</span>
                                                     </div>
                                                     <div class="text-success flex flex-col">
                                                         <span class="text-xs opacity-75">Depois:</span>
-                                                        <span class="truncate">
-                                                            {{ formatFieldValue(campo, alteracao.new) || '-' }}
-                                                        </span>
+                                                        <span class="truncate">{{ formatFieldValue(campo, alteracao.new) || '-' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,20 +121,21 @@
                                     </div>
 
                                     <!-- Metadados -->
-                                    <div class="mt-3 pt-2 border-t border-base-200">
+                                    <div class="border-base-200 mt-3 border-t pt-2">
                                         <div class="flex flex-wrap items-center gap-2 text-xs opacity-60">
                                             <div class="flex items-center gap-1">
-                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                                    />
                                                 </svg>
                                                 <span>{{ item.ip_address }}</span>
                                             </div>
                                             <div v-if="item.tags" class="flex flex-wrap gap-1">
-                                                <div
-                                                    v-for="tag in item.tags.split(',')"
-                                                    :key="tag"
-                                                    class="badge badge-outline badge-xs"
-                                                >
+                                                <div v-for="tag in item.tags.split(',')" :key="tag" class="badge badge-outline badge-xs">
                                                     {{ tag.trim() }}
                                                 </div>
                                             </div>
@@ -163,6 +151,7 @@
     </div>
 </template>
 
+<!-- eslint-disable-next-line vue/block-lang -->
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 
@@ -185,7 +174,6 @@ const props = defineProps({
 // Estados
 const filtroEvento = ref('');
 const detalhesAbertos = ref([]);
-const usuarios = ref({});
 
 // Dados de exemplo para a parcela
 const parcelaInfo = ref({
@@ -464,22 +452,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Garante que textos grandes são exibidos corretamente */
-.break-words {
-    word-wrap: break-word;
-    word-break: break-word;
-}
-
-/* Ajustes para responsividade */
-@media (max-width: 768px) {
-    .timeline-start {
-        text-align: left;
-        min-width: 100px;
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Altura máxima para garantir que cabe no drawer */
-.overflow-y-auto {
-    max-height: calc(100vh - 200px);
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
 }
 </style>

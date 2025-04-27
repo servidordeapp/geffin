@@ -176,31 +176,6 @@
                                 </table>
                             </div>
                         </div>
-
-                        <!-- Drawer global que será posicionado no final do seu template principal -->
-                        <div>
-                            <input :id="'global-drawer'" type="checkbox" class="drawer-toggle" v-model="isDrawerOpen" />
-                            <div class="drawer-side fixed top-0 left-0 z-50">
-                                <label :for="'global-drawer'" aria-label="close sidebar" class="drawer-overlay"></label>
-                                <div class="bg-base-200 text-base-content h-full w-2/3 overflow-y-auto p-4 md:w-1/2">
-                                    <div class="mb-4 flex items-center justify-between">
-                                        <h3 class="text-lg font-medium">Histórico da Parcela</h3>
-                                        <button class="btn btn-sm btn-circle" @click="isDrawerOpen = false">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="h-5 w-5"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <PaymentHistory :parcelaId="selectedInstallment" :clienteIdclient="selectedClient.id"></PaymentHistory>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -213,6 +188,29 @@
                     <button class="join-item btn" :disabled="currentPage === totalPages" @click="currentPage++">»</button>
                 </div>
             </div>
+
+            <!-- Drawer global que será posicionado no final do seu template principal -->
+<div class="drawer drawer-end">
+  <input :id="'global-drawer'" type="checkbox" class="drawer-toggle" v-model="isDrawerOpen" />
+
+  <div class="drawer-side z-50">
+    <label :for="'global-drawer'" aria-label="close sidebar" class="drawer-overlay bg-black bg-opacity-40"></label>
+
+    <div class="bg-base-200 text-base-content h-full w-2/3 md:w-1/2 overflow-y-auto">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-medium p-4">Histórico da Parcela</h3>
+        <button class="btn btn-sm btn-circle" @click="isDrawerOpen = false">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <PaymentHistory :parcelaId="selectedInstallment" />
+    </div>
+  </div>
+</div>
+
         </div>
     </AppLayout>
 </template>
